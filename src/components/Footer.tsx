@@ -1,6 +1,6 @@
-import { Code2, Heart, Github, Linkedin} from 'lucide-react';
+import { Code2, Heart, Github, Linkedin } from 'lucide-react';
 
-const Footer = () => {
+const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -13,7 +13,7 @@ const Footer = () => {
               <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
                 <Code2 className="w-5 h-5 text-white" />
               </div>
-              <span className="text-xl font-bold text-white">Portfolio</span>
+              <span className="text-xl font-bold text-white">Riyaz M</span>
             </div>
             <p className="text-gray-300 leading-relaxed">
               Crafting digital experiences through code, design, and creativity. 
@@ -61,19 +61,6 @@ const Footer = () => {
               >
                 <Linkedin className="w-5 h-5" />
               </a>
-            </div>
-          </div>
-        </div>
-
-        <div className="border-t border-gray-700 mt-8 pt-8">
-          <div className="flex flex-col md:flex-row items-center justify-between">
-            <p className="text-gray-300 text-sm">
-              © {currentYear} Portfolio. All rights reserved.
-            </p>
-            <div className="flex items-center space-x-1 text-gray-300 text-sm mt-4 md:mt-0">
-              <span>Made with</span>
-              <Heart className="w-4 h-4 text-red-500" />
-              <span>and lots of coffee</span>
             </div>
           </div>
         </div>
