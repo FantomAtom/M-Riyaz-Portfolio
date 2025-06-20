@@ -6,8 +6,6 @@ import {
   Smartphone,
   Wrench,
   Filter,
-  ChevronLeft,
-  ChevronRight,
 } from 'lucide-react';
 
 interface Project {
@@ -155,13 +153,13 @@ const ProjectModal: React.FC<ModalProps> = ({ project, onClose }) => {
   return (
     <div
       ref={backdropRef}
-      className={`fixed inset-0 bg-black/70 flex items-center justify-center z-50 transition-opacity ${
+      className={`fixed inset-0 bg-black/70 flex items-center justify-center z-50 transition-opacity duration-300 ${
         visible ? 'opacity-100' : 'opacity-0'
       }`}
       onClick={handleBackdropClick}
     >
       <div
-        className={`bg-gray-800 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto transform transition-all ${
+        className={`bg-gray-800 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto transform transition-all duration-300 ${
           visible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
         }`}
       >
@@ -225,10 +223,7 @@ const ProjectCard: React.FC<{
   onClick: () => void;
 }> = ({ project, onClick }) => {
   return (
-    <div
-      onClick={onClick}
-      className="cursor-pointer group"
-    >
+    <div onClick={onClick} className="cursor-pointer group">
       <div className="rounded-xl p-px bg-gradient-to-r from-purple-500 to-blue-500 group-hover:scale-105 transform transition-all duration-300">
         <div className="bg-gray-800 rounded-xl overflow-hidden">
           <div className="relative overflow-hidden">
@@ -293,6 +288,18 @@ const ProjectCard: React.FC<{
 const Projects: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<'all' | 'game' | 'app' | 'other'>('all');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+
+  // Prevent background scroll when modal is open
+  useEffect(() => {
+    if (selectedProject) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [selectedProject]);
 
   // Background overlay effect
   const overlayRef = useRef<HTMLDivElement | null>(null);
@@ -366,6 +373,7 @@ const Projects: React.FC = () => {
         style={{ opacity: 0 }}
       />
 
+      {/* Main content (no blur) */}
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">My Projects</h2>
@@ -379,7 +387,7 @@ const Projects: React.FC = () => {
         {featuredProjects.length > 0 && (
           <div className="mb-16">
             <div className="relative bg-gradient-to-r from-purple-800 to-blue-800 rounded-2xl py-12 px-4 md:px-8 overflow-hidden">
-              {/* Animated blobs (requires Tailwind config extension for animate-blob) */}
+              {/* Animated blobs */}
               <div className="absolute -top-20 -left-20 w-64 h-64 bg-purple-700 opacity-20 rounded-full animate-blob"></div>
               <div className="absolute -bottom-20 -right-20 w-72 h-72 bg-blue-700 opacity-20 rounded-full animate-blob animation-delay-2000"></div>
 
@@ -387,9 +395,7 @@ const Projects: React.FC = () => {
                 Featured Work
               </h3>
               <div className="relative">
-                <div
-                  className="flex flex-wrap justify-center gap-6"
-                >
+                <div className="flex flex-wrap justify-center gap-6">
                   {featuredProjects.slice(0, 3).map((project) => (
                     <div
                       key={project.id}
@@ -463,16 +469,14 @@ const Projects: React.FC = () => {
             />
           ))}
         </div>
-
-        {/* Project Modal */}
-        {selectedProject && (
-          <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
-        )}
       </div>
+
+      {/* Project Modal */}
+      {selectedProject && (
+        <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
+      )}
     </section>
   );
 };
 
 export default Projects;
-
-

@@ -342,9 +342,6 @@ const Contact: React.FC = () => {
                 className="w-full px-4 py-3 bg-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 transition resize-none"
               />
 
-              {/* Optional hCaptcha (uncomment if needed) */}
-              {/* <div className="h-captcha" data-captcha="true"></div> */}
-
               <button
                 type="submit"
                 className="w-full bg-gradient-to-r from-purple-500 to-blue-500 py-3 rounded-lg font-semibold hover:shadow-xl transition-transform transform hover:scale-105 flex items-center justify-center space-x-2"
