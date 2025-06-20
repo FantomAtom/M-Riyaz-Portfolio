@@ -248,9 +248,8 @@ const Contact: React.FC = () => {
               Shoot me an email, call, or a message below!
             </p>
             {[
-              { icon: <Mail />, label: 'Email', value: 'hello@yourportfolio.com' },
-              { icon: <Phone />, label: 'Phone', value: '+1 (555) 123-4567' },
-              { icon: <MapPin />, label: 'Location', value: 'San Francisco, CA' },
+              { icon: <Mail />, label: 'Email', value: 'ContactRiyaz2727@gmail.com' },
+              { icon: <Phone />, label: 'Phone', value: '+91 9344735581' },
             ].map((item, i) => (
               <div key={i} className="flex items-center space-x-4">
                 <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
