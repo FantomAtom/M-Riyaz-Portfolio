@@ -2,14 +2,18 @@ import React, { useRef, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Send, MapPin, Phone, Github, Linkedin } from 'lucide-react';
 
-const Contact: React.FC = () => {
-  const [submitted, setSubmitted] = useState(false);
+const WEB3FORMS_ACCESS_KEY = "0a037c19-b1a3-48ae-ad95-01639cf23f52";
 
-  // ripple overlay refs
+// Minimum time (ms) before allowing submission (to deter bots)
+const MIN_SUBMIT_DELAY = 3000;
+
+const Contact: React.FC = () => {
+  const [result, setResult] = useState("");
   const overlayRef = useRef<HTMLDivElement | null>(null);
   const rafRef = useRef<number | null>(null);
+  const [mountTime] = useState(() => Date.now());
 
-  // ripple on mouse move
+  // Ripple overlay handlers
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const overlay = overlayRef.current;
     const rect = e.currentTarget.getBoundingClientRect();
@@ -28,21 +32,57 @@ const Contact: React.FC = () => {
   const handleMouseLeave = () => {
     if (overlayRef.current) overlayRef.current.style.opacity = '0';
   };
-  useEffect(() => () => {
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+  useEffect(() => {
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
   }, []);
 
-  // custom submit to Netlify, then show toast
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
-    const form = e.currentTarget;
-    const data = new FormData(form);
-    fetch('/', { method: 'POST', body: data }).then(() => {
-      form.reset();
-      setSubmitted(true);
-      // hide toast after 3s
-      setTimeout(() => setSubmitted(false), 3000);
-    });
+  // Submit handler with timestamp & honeypot check
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    // Honeypot check: if non-empty, abort
+    const botcheck = formData.get('botcheck')?.toString().trim();
+    if (botcheck) {
+      console.warn("Honeypot triggered, aborting submission.");
+      setResult("Unable to send message.");
+      setTimeout(() => setResult(""), 3000);
+      return;
+    }
+
+    // Timestamp check
+    const elapsed = Date.now() - mountTime;
+    if (elapsed < MIN_SUBMIT_DELAY) {
+      setResult("Please take a moment before submitting.");
+      setTimeout(() => setResult(""), 3000);
+      return;
+    }
+
+    setResult("Sending...");
+    formData.append("access_key", WEB3FORMS_ACCESS_KEY);
+    formData.append("from_name", "Portfolio Contact Form");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+      const data = await response.json();
+      if (data.success) {
+        setResult("Message sent successfully!");
+        form.reset();
+      } else {
+        console.error("Web3Forms error:", data);
+        setResult(data.message || "Submission failed.");
+      }
+    } catch (err) {
+      console.error("Fetch error:", err);
+      setResult("An error occurred. Please try again.");
+    }
+    setTimeout(() => setResult(""), 3000);
   };
 
   return (
@@ -62,9 +102,9 @@ const Contact: React.FC = () => {
       <div className="absolute -top-16 -left-16 w-48 h-48 bg-purple-600 opacity-20 rounded-full animate-blob" />
       <div className="absolute -bottom-16 -right-16 w-56 h-56 bg-blue-600 opacity-20 rounded-full animate-blob animation-delay-2000" />
 
-      {/* Slide-in/out toast from left to right */}
+      {/* Toast */}
       <AnimatePresence>
-        {submitted && (
+        {result && (
           <motion.div
             initial={{ x: '-100%', opacity: 0 }}
             animate={{ x: '0%', opacity: 1 }}
@@ -72,16 +112,56 @@ const Contact: React.FC = () => {
             transition={{ duration: 0.5, ease: 'easeInOut' }}
             className="fixed top-20 left-0 z-50 mx-auto w-full max-w-md px-4"
           >
-            <div className="flex items-center bg-gradient-to-r from-purple-500 to-blue-500 text-white px-6 py-3 rounded-full shadow-lg">
-              <svg
-                className="w-6 h-6 mr-2 animate-pulse"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path d="M12 2l3 7h-6l3-7zm-6 9l6 12 6-12h-12z" />
-              </svg>
-              <span className="font-semibold">Your message has been sent!</span>
+            <div
+              className={`flex items-center px-6 py-3 rounded-full shadow-lg
+                ${result.toLowerCase().includes("success") 
+                  ? "bg-gradient-to-r from-green-500 to-teal-400 text-white"
+                  : result.toLowerCase().includes("sending")
+                  ? "bg-gray-700 text-white"
+                  : "bg-red-500 text-white"
+                }`}
+            >
+              {result.toLowerCase().includes("sending") ? (
+                <svg
+                  className="w-6 h-6 mr-2 animate-spin"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                  />
+                </svg>
+              ) : result.toLowerCase().includes("success") ? (
+                <svg
+                  className="w-6 h-6 mr-2"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M9 12l2 2 4-4m5 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              ) : (
+                <svg
+                  className="w-6 h-6 mr-2"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path fillRule="evenodd" d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 14.414V17a1 1 0 10-2 0v-.586a1 1 0 102 0zm0-8.828a1 1 0 10-2 0v5.172a1 1 0 102 0V7.586z" clipRule="evenodd" />
+                </svg>
+              )}
+              <span className="font-semibold">{result}</span>
             </div>
           </motion.div>
         )}
@@ -138,18 +218,22 @@ const Contact: React.FC = () => {
             </div>
           </div>
 
-          {/* Netlify Form */}
+          {/* Web3Forms form */}
           <div className="bg-gray-800 rounded-2xl p-8 shadow-lg">
-            <form
-              name="contact"
-              method="POST"
-              data-netlify="true"
-              netlify-honeypot="bot-field"
-              onSubmit={handleSubmit}
-              className="space-y-6"
-            >
-              <input type="hidden" name="bot-field" />
-              <input type="hidden" name="form-name" value="contact" />
+            <form onSubmit={onSubmit} className="space-y-6">
+              {/* Hidden access_key */}
+              <input type="hidden" name="access_key" value={WEB3FORMS_ACCESS_KEY} />
+              {/* Hidden from_name for better From header */}
+              <input type="hidden" name="from_name" value="Portfolio Contact Form" />
+              {/* Hidden honeypot text input */}
+              <input
+                type="text"
+                name="botcheck"
+                defaultValue=""
+                autoComplete="off"
+                tabIndex={-1}
+                style={{ display: 'none' }}
+              />
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <input
@@ -168,6 +252,7 @@ const Contact: React.FC = () => {
                 />
               </div>
 
+              {/* Visible Subject field */}
               <input
                 type="text"
                 name="subject"
@@ -183,6 +268,11 @@ const Contact: React.FC = () => {
                 required
                 className="w-full px-4 py-3 bg-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 transition resize-none"
               />
+
+              {/* Optional hCaptcha (uncomment if desired):
+                  <div className="h-captcha" data-captcha="true"></div>
+                  // Plus include <script src="https://web3forms.com/client/script.js" async defer></script> in your HTML.
+              */}
 
               <button
                 type="submit"
