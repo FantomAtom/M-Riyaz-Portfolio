@@ -3,9 +3,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Send, MapPin, Phone, Github, Linkedin } from 'lucide-react';
 
 const WEB3FORMS_ACCESS_KEY = "0a037c19-b1a3-48ae-ad95-01639cf23f52";
-
-// Minimum time (ms) before allowing submission (to deter bots)
 const MIN_SUBMIT_DELAY = 3000;
+
+// Blacklisted emails
+const EMAIL_BLACKLIST = [
+  "contactriyaz2727@gmail.com".toLowerCase(),
+];
+
+// Simple email regex for client-side check
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const Contact: React.FC = () => {
   const [result, setResult] = useState("");
@@ -13,13 +19,12 @@ const Contact: React.FC = () => {
   const rafRef = useRef<number | null>(null);
   const [mountTime] = useState(() => Date.now());
 
-  // Ripple overlay handlers
+  // Ripple overlay handlers...
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const overlay = overlayRef.current;
     const rect = e.currentTarget.getBoundingClientRect();
     if (!overlay) return;
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
-
     const xPct = ((e.clientX - rect.left) / rect.width) * 100;
     const yPct = ((e.clientY - rect.top) / rect.height) * 100;
     overlay.style.opacity = '1';
@@ -38,29 +43,89 @@ const Contact: React.FC = () => {
     };
   }, []);
 
-  // Submit handler with timestamp & honeypot check
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
     const formData = new FormData(form);
 
-    // Honeypot check: if non-empty, abort
+    // Honeypot
     const botcheck = formData.get('botcheck')?.toString().trim();
     if (botcheck) {
-      console.warn("Honeypot triggered, aborting submission.");
+      console.warn("Honeypot triggered");
       setResult("Unable to send message.");
       setTimeout(() => setResult(""), 3000);
       return;
     }
-
-    // Timestamp check
+    // Timestamp
     const elapsed = Date.now() - mountTime;
     if (elapsed < MIN_SUBMIT_DELAY) {
       setResult("Please take a moment before submitting.");
       setTimeout(() => setResult(""), 3000);
       return;
     }
+    // Extract fields
+    const name = formData.get('name')?.toString().trim() || "";
+    const emailRaw = formData.get('email')?.toString().trim() || "";
+    const email = emailRaw.toLowerCase();
+    const subject = formData.get('subject')?.toString().trim() || "";
+    const message = formData.get('message')?.toString().trim() || "";
 
+    // Name
+    if (!name) {
+      setResult("Name is required.");
+      setTimeout(() => setResult(""), 3000);
+      return;
+    }
+    if (name.length > 30) {
+      setResult("Name must be 30 characters or fewer.");
+      setTimeout(() => setResult(""), 3000);
+      return;
+    }
+    // Email
+    if (!email) {
+      setResult("Email is required.");
+      setTimeout(() => setResult(""), 3000);
+      return;
+    }
+    if (email.length > 100) {
+      setResult("Email must be 100 characters or fewer.");
+      setTimeout(() => setResult(""), 3000);
+      return;
+    }
+    if (!EMAIL_REGEX.test(email)) {
+      setResult("Please enter a valid email address.");
+      setTimeout(() => setResult(""), 3000);
+      return;
+    }
+    if (EMAIL_BLACKLIST.includes(email)) {
+      setResult("Please use a different email address.");
+      setTimeout(() => setResult(""), 3000);
+      return;
+    }
+    // Subject
+    if (!subject) {
+      setResult("Subject is required.");
+      setTimeout(() => setResult(""), 3000);
+      return;
+    }
+    if (subject.length > 60) {
+      setResult("Subject must be 60 characters or fewer.");
+      setTimeout(() => setResult(""), 3000);
+      return;
+    }
+    // Message
+    if (!message || message.length < 10) {
+      setResult("Message should be at least 10 characters.");
+      setTimeout(() => setResult(""), 3000);
+      return;
+    }
+    if (message.length > 1000) {
+      setResult("Message is too long (max 1000 characters).");
+      setTimeout(() => setResult(""), 3000);
+      return;
+    }
+
+    // All good: send
     setResult("Sending...");
     formData.append("access_key", WEB3FORMS_ACCESS_KEY);
     formData.append("from_name", "Portfolio Contact Form");
@@ -114,7 +179,7 @@ const Contact: React.FC = () => {
           >
             <div
               className={`flex items-center px-6 py-3 rounded-full shadow-lg
-                ${result.toLowerCase().includes("success") 
+                ${result.toLowerCase().includes("sent") 
                   ? "bg-gradient-to-r from-green-500 to-teal-400 text-white"
                   : result.toLowerCase().includes("sending")
                   ? "bg-gray-700 text-white"
@@ -142,7 +207,7 @@ const Contact: React.FC = () => {
                     d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
                   />
                 </svg>
-              ) : result.toLowerCase().includes("success") ? (
+              ) : result.toLowerCase().includes("sent") ? (
                 <svg
                   className="w-6 h-6 mr-2"
                   xmlns="http://www.w3.org/2000/svg"
@@ -223,9 +288,9 @@ const Contact: React.FC = () => {
             <form onSubmit={onSubmit} className="space-y-6">
               {/* Hidden access_key */}
               <input type="hidden" name="access_key" value={WEB3FORMS_ACCESS_KEY} />
-              {/* Hidden from_name for better From header */}
+              {/* Hidden from_name */}
               <input type="hidden" name="from_name" value="Portfolio Contact Form" />
-              {/* Hidden honeypot text input */}
+              {/* Hidden honeypot */}
               <input
                 type="text"
                 name="botcheck"
@@ -235,44 +300,50 @@ const Contact: React.FC = () => {
                 style={{ display: 'none' }}
               />
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Your Name"
-                  required
-                  className="w-full px-4 py-3 bg-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 transition"
-                />
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Your Email"
-                  required
-                  className="w-full px-4 py-3 bg-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 transition"
-                />
-              </div>
-
-              {/* Visible Subject field */}
+              {/* Subject */}
               <input
                 type="text"
                 name="subject"
                 placeholder="Subject"
                 required
+                maxLength={60}
                 className="w-full px-4 py-3 bg-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 transition"
               />
 
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Name */}
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Your Name"
+                  required
+                  maxLength={30}
+                  className="w-full px-4 py-3 bg-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 transition"
+                />
+                {/* Email with maxLength & pattern */}
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Your Email"
+                  required
+                  maxLength={100}
+                  pattern="[^\s@]+@[^\s@]+\.[^\s@]+"
+                  className="w-full px-4 py-3 bg-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 transition"
+                />
+              </div>
+
+              {/* Message */}
               <textarea
                 name="message"
                 rows={6}
                 placeholder="Your Message…"
                 required
+                maxLength={1000}
                 className="w-full px-4 py-3 bg-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 transition resize-none"
               />
 
-              {/* Optional hCaptcha (uncomment if desired):
-                  <div className="h-captcha" data-captcha="true"></div>
-                  // Plus include <script src="https://web3forms.com/client/script.js" async defer></script> in your HTML.
-              */}
+              {/* Optional hCaptcha (uncomment if needed) */}
+              {/* <div className="h-captcha" data-captcha="true"></div> */}
 
               <button
                 type="submit"
