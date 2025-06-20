@@ -108,9 +108,10 @@ export default function Hero() {
             text-5xl md:text-7xl font-bold mb-6
             bg-gradient-to-r from-purple-400 to-blue-400
             bg-clip-text text-transparent
+            leading-tight md:leading-tight
           "
         >
-          Hey there! I&apos;m Riyaz M
+          Hey there! I&apos;m Riyaz M
         </motion.h1>
 
         {/* Typing effect line with dynamic article */}
