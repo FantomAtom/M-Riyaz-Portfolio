@@ -1,17 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Code2, Gamepad2, Smartphone, User, Mail } from 'lucide-react';
+import { Menu, X, Code2, Gamepad2, User, Mail } from 'lucide-react';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      const currentScrollPos = window.scrollY;
+      
+      // Determine if scrolled past threshold
+      setScrolled(currentScrollPos > 50);
+      
+      // Determine scroll direction and visibility
+      const isScrollingDown = currentScrollPos > prevScrollPos;
+      
+      // Only hide header when scrolling down and past threshold
+      setVisible(!isScrollingDown || currentScrollPos < 50);
+      
+      setPrevScrollPos(currentScrollPos);
     };
+    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [prevScrollPos]);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -22,9 +36,11 @@ const Header = () => {
   };
 
   return (
-    <header className={`fixed w-full top-0 z-50 transition-all duration-300 ${
-      scrolled ? 'bg-gray-900/95 backdrop-blur-sm shadow-lg' : 'bg-transparent'
-    }`}>
+    <header 
+      className={`fixed w-full top-0 z-50 transition-all duration-300 transform ${
+        scrolled ? 'bg-gray-900/95 backdrop-blur-sm shadow-lg' : 'bg-transparent'
+      } ${visible ? 'translate-y-0' : '-translate-y-full'}`}
+    >
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <div 
