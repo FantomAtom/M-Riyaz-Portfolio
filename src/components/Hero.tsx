@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowDown, Github, Linkedin, Twitter } from 'lucide-react';
+import { ArrowDown, Github, Linkedin } from 'lucide-react';
 
 const Hero = () => {
   const scrollToProjects = () => {
@@ -42,14 +42,11 @@ const Hero = () => {
           </div>
           
           <div className="flex items-center justify-center space-x-6">
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">
+            <a href="https://github.com/FantomAtom" className="text-gray-400 hover:text-white transition-colors">
               <Github className="w-6 h-6" />
             </a>
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">
+            <a href="https://www.linkedin.com/in/m-riyaz-dev/" className="text-gray-400 hover:text-white transition-colors">
               <Linkedin className="w-6 h-6" />
-            </a>
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">
-              <Twitter className="w-6 h-6" />
             </a>
           </div>
         </div>
