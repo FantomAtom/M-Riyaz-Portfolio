@@ -7,6 +7,7 @@ type Highlight = {
   description: string;
 };
 
+// Your highlights array as before
 const highlights: Highlight[] = [
   {
     icon: <Gamepad2 className="w-6 h-6" />,
@@ -30,7 +31,7 @@ const highlights: Highlight[] = [
   },
 ];
 
-// Tilt-on-hover card component
+// Tilt-on-hover card component (unchanged)
 const TiltCard: React.FC<{ highlight: Highlight }> = ({ highlight }) => {
   const cardRef = useRef<HTMLDivElement | null>(null);
   const rafRef = useRef<number | null>(null);
@@ -38,23 +39,17 @@ const TiltCard: React.FC<{ highlight: Highlight }> = ({ highlight }) => {
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const el = cardRef.current;
     if (!el) return;
-
-    // cancel previous frame
     if (rafRef.current !== null) {
       cancelAnimationFrame(rafRef.current);
     }
-
     const rect = el.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    const px = (x / rect.width) * 2 - 1; // -1 to 1
-    const py = (y / rect.height) * 2 - 1; // -1 to 1
-
-    // limit rotation angles
-    const rotateMax = 8; // degrees
-    const rotY = px * rotateMax; // tilt left/right
-    const rotX = -py * rotateMax; // tilt up/down
-
+    const px = (x / rect.width) * 2 - 1;
+    const py = (y / rect.height) * 2 - 1;
+    const rotateMax = 8;
+    const rotY = px * rotateMax;
+    const rotX = -py * rotateMax;
     rafRef.current = requestAnimationFrame(() => {
       if (el) {
         el.style.transform = `perspective(600px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.02,1.02,1.02)`;
@@ -70,10 +65,8 @@ const TiltCard: React.FC<{ highlight: Highlight }> = ({ highlight }) => {
       rafRef.current = null;
     }
     if (el) {
-      // reset transform smoothly
       el.style.transition = 'transform 0.3s ease';
       el.style.transform = 'perspective(600px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)';
-      // remove transition after it ends so further moves aren’t delayed
       const cleanup = () => {
         if (el) {
           el.style.transition = '';
@@ -109,22 +102,16 @@ const About: React.FC = () => {
     const section = e.currentTarget;
     const overlay = overlayRef.current;
     if (!overlay) return;
-    // cancel pending frame
     if (rafRef.current !== null) {
       cancelAnimationFrame(rafRef.current);
     }
-
     const rect = section.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     const xPct = (x / rect.width) * 100;
     const yPct = (y / rect.height) * 100;
-
-    // ensure visible
     overlay.style.opacity = '1';
-
     rafRef.current = requestAnimationFrame(() => {
-      // teal-ish radial light
       overlay.style.background = `radial-gradient(circle at ${xPct}% ${yPct}%, rgba(0,200,200,0.25) 0%, rgba(0,200,200,0) 70%)`;
       rafRef.current = null;
     });
@@ -133,9 +120,7 @@ const About: React.FC = () => {
   const handleMouseLeave = () => {
     const overlay = overlayRef.current;
     if (!overlay) return;
-    // fade out linger
     overlay.style.opacity = '0';
-    // keep background so fade shows last position before fully transparent
   };
 
   useEffect(() => {
@@ -153,13 +138,53 @@ const About: React.FC = () => {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Overlay for radial light */}
+      {/* Enhanced animated stars background */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Base star layer */}
+        <div className="absolute inset-0" style={{ 
+          backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px)',
+          backgroundSize: '50px 50px'
+        }}></div>
+        
+        {/* Twinkling stars layer 1 */}
+        <div className="absolute inset-0 animate-twinkle" style={{ 
+          backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.3) 1px, transparent 1px)',
+          backgroundSize: '80px 80px',
+          animationDelay: '0s'
+        }}></div>
+        
+        {/* Twinkling stars layer 2 */}
+        <div className="absolute inset-0 animate-twinkle" style={{ 
+          backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.25) 1px, transparent 1px)',
+          backgroundSize: '120px 120px',
+          animationDelay: '1s'
+        }}></div>
+        
+        {/* Sparkling stars - larger and more prominent */}
+        <div className="absolute inset-0 animate-sparkle" style={{ 
+          backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.4) 2px, transparent 2px)',
+          backgroundSize: '200px 200px',
+          animationDelay: '0.5s'
+        }}></div>
+        
+        {/* Floating stars layer */}
+        <div className="absolute inset-0 animate-float" style={{ 
+          backgroundImage: 'radial-gradient(circle, rgba(180,180,255,0.3) 1.5px, transparent 1.5px)',
+          backgroundSize: '150px 150px',
+        }}></div>
+        
+        {/* Glowing nebula effect */}
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/15 via-transparent to-blue-900/15"></div>
+      </div>
+
+      {/* Radial overlay */}
       <div
         ref={overlayRef}
         className="absolute inset-0 pointer-events-none transition-opacity duration-1000"
         style={{ opacity: 0 }}
       />
 
+      {/* Main content */}
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">About Me</h2>
