@@ -7,6 +7,7 @@ import {
   Wrench,
   Filter,
   Store,
+  Youtube,
 } from 'lucide-react';
 
 import talim from '../assets/images/talim.png';
@@ -27,6 +28,7 @@ interface Project {
   viewMoreUrl?: string;
   playstoreUrl?: string;
   viewOnItch?: string;
+  viewOnYT?: string;
   // Keep legacy fields optional if you have other projects using them
   githubUrl?: string;
   liveUrl?: string;
@@ -171,6 +173,19 @@ const projects: Project[] = [
     viewOnItch: 'https://fantom-atom.itch.io/social-status',
     featured: false,
   },
+  {
+    id: 11,
+    title: 'Ultrio Studios',
+    description: 'Ultrio Studios is a my Tamil game dev YouTube channel I started with two other friends. We made games, shared practical C# tutorials, and shared our learning journey.',
+    longDescription:
+      'Ultrio Studios was a channel I created with my friends Arshad (Shade) and Sathish (Atomic). For over 3 years, we made videos about game development in Tamil, covering everything from Unity tutorials and C# basics to devlogs, game jam entries, and fun challenges. It started as a way to document our learning and share what we knew, and over time, it grew into a small community. Though we’ve since moved on from the channel, it remains a project we’re really proud of.',
+    category: 'other',
+    image:
+      'https://yt3.googleusercontent.com/GFpJNIExJMK9UsLo4r-4DaDn-u3kVd4Tk4OZRgTkTsbvhQvZoPWpSoI-IRlakq7GZytvHH-FnE0=w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj',
+    technologies: ['Premiere Pro CC', 'Audacity', 'Photoshop', 'TubeBuddy'],
+    viewOnYT: 'https://www.youtube.com/@UltrioStudios',
+    featured: false,
+  },
 ];
 
 const categories = [
@@ -286,6 +301,25 @@ const ProjectModal: React.FC<ModalProps> = ({ project, onClose }) => {
               >
                 <Store className="w-5 h-5" />
                 <span>View on Itch</span>
+              </a>
+            )}
+            {project.viewOnYT && (
+              <a
+                href={project.viewOnYT}
+                className="
+                  flex items-center space-x-2 
+                  bg-[#FF0000] 
+                  text-white 
+                  px-6 py-3 
+                  rounded-full 
+                  hover:bg-[#cc0000] 
+                  transition-all duration-300
+                "
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Youtube className="w-5 h-5 text-white" />
+                <span>View on YouTube</span>
               </a>
             )}
             {/* For other projects that might have github/liveUrl: */}
