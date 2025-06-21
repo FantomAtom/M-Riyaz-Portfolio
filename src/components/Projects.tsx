@@ -13,6 +13,7 @@ import talim from '../assets/images/talim.png';
 import busbeat from '../assets/images/busbeat.svg';
 import lightmaker from '../assets/images/lightmaker.png';
 import skillshot from '../assets/images/skillshot.png';
+import knockmaniac from '../assets/images/knockmaniac.png';
 
 interface Project {
   id: number;
@@ -94,30 +95,80 @@ const projects: Project[] = [
   },
   {
     id: 5,
-    title: 'AI Art Generator',
-    description: 'Creative tool that generates artwork using machine learning algorithms.',
+    title: 'Dish Dash! - Food Delivery App',
+    description: 'Dish Dash! is a React Native food-ordering prototype with delivery and pickup options, powered by Firebase for real-time data and secure user authentication.',
     longDescription:
-      'An innovative application that uses machine learning to generate unique artworks based on user inputs and style preferences. Features style transfer, custom prompts, and gallery sharing.',
-    category: 'other',
+      'Dish Dash! is a learning project built in React Native that lets users browse menus, place orders for delivery or pickup, and manage their account via Firebase Authentication. It uses Firestore for storing menu items and orders, Firebase Storage for images, and demonstrates real-time updates and basic order flow. Designed as a prototype, it showcases integration of core Firebase services and mobile UI patterns for a seamless ordering experience.',
+    category: 'app',
     image:
-      'https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=600',
-    technologies: ['Python', 'TensorFlow', 'Flask', 'React'],
-    githubUrl: '#',
-    liveUrl: '#',
+      'https://media.istockphoto.com/id/1394533352/vector/male-food-delivery-man-in-yellow-uniform-sits-on-scooter-or-motorcycle-with-a-box.jpg?s=612x612&w=0&k=20&c=XkfEONMbcZVa_y9uJ6wR1oPmk2BqdkFinuY5yr8tkTA=',
+    technologies: ['React Native', 'JavaScript', 'Firebase Authentication', 'Firebase Storage'],
+    githubUrl: 'https://github.com/FantomAtom/Dish-Dash',
     featured: false,
   },
   {
     id: 6,
-    title: 'Weather Dashboard',
-    description: 'Beautiful weather app with detailed forecasts and interactive maps.',
+    title: 'Knock Maniac',
+    description: 'Tap your way to mastery in Door Knock Maniac—a fast-paced clicking game where every knock counts and the challenge ramps up with each beat.',
     longDescription:
-      'A comprehensive weather application providing detailed forecasts, interactive weather maps, alerts, and personalized recommendations. Features clean design and smooth animations.',
-    category: 'app',
+      'Door Knock Maniac is a casual, browser-friendly game created as a fun YouTube project. Players click on circles that appear on a door before they vanish, managing a noise meter that tracks how loud each knock is, and building combos for bonus points. As time progresses, the spawn rate accelerates, testing reflexes and timing in an addictive loop.',
+    category: 'game',
     image:
-      'https://images.pexels.com/photos/1118873/pexels-photo-1118873.jpeg?auto=compress&cs=tinysrgb&w=600',
-    technologies: ['Vue.js', 'Weather API', 'Chart.js', 'Tailwind'],
-    githubUrl: '#',
-    liveUrl: '#',
+      'https://img.itch.zone/aW1hZ2UvMzI5ODg0OS8xOTY5ODU2Ni5wbmc=/original/8e9AVH.png',
+    technologies: ['Unity', 'C#', 'Photoshop'],
+    viewOnItch: 'https://fantom-atom.itch.io/knock-maniac',
+    featured: false,
+  },
+  {
+    id: 7,
+    title: 'Timeless',
+    description: 'Race against time in Timeless, a fast-paced pixel-art puzzle game where failure rewinds your progress and precision is your only way forward.',
+    longDescription:
+      'Timeless is a 2D top-down puzzle game created in just a week for Brackeys Game Jam 2020.2, developed by a team of three. You play as an explorer navigating mysterious rooms, solving spatial puzzles under intense time pressure. If the timer hits zero, time reverses—and you are sent back to where you started in that level. With a twist on classic puzzle mechanics and a stylish retro aesthetic, Timeless offers a unique and engaging gameplay experience.',
+    category: 'game',
+    image:
+      'https://img.itch.zone/aW1hZ2UvMzI5ODg5My8xOTY5ODc2OC5wbmc=/794x1000/a3zZV8.png',
+    technologies: ['Unity', 'C#', 'Photoshop', 'FL Studio'],
+    viewOnItch: 'https://fantom-atom.itch.io/timeless',
+    featured: false,
+  },
+  {
+    id: 8,
+    title: 'Master Runner',
+    description: 'Dash, dodge, and dominate in Master Runner—a nonstop side-scrolling sprint inspired by the Tamil film Master, where you play as Vijay outrunning chaos.',
+    longDescription:
+      'Master Runner is a quick, silly side-scroller made as part of a YouTube dev video. Inspired by a high-energy scene from the Tamil movie Master, you play as Vijay, constantly running while avoiding a barrage of incoming obstacles. Simple, fast-paced, and made for fun.',
+    category: 'game',
+    image:
+      'https://img.itch.zone/aW1hZ2UvMzI5ODc1MC8xOTY5NzkwNS5wbmc=/794x1000/9I6XhY.png',
+    technologies: ['Unity', 'C#', 'Photoshop'],
+    viewOnItch: 'https://fantom-atom.itch.io/master-runner',
+    featured: false,
+  },
+  {
+    id: 9,
+    title: 'Valimai Rider',
+    description: 'Rev up and ride as Ajith Kumar in Valimai Rider—a chaotic, high-speed bike dodge-fest inspired by the over-the-top stunts of Valimai.',
+    longDescription:
+      'Valimai Rider is a fun, fast-paced bike game inspired by the Tamil action movie Valimai, created as part of a YouTube dev video. You play as Ajith Kumar, dodging traffic and obstacles on a never-ending ride filled with ridiculous speed and last-second saves. It’s silly, cinematic, and made purely for fun.',
+    category: 'game',
+    image:
+      'https://img.itch.zone/aW1nLzE5Njk3NTAyLmpwZw==/315x250%23c/jOQgmd.jpg',
+    technologies: ['Unity', 'C#', 'Photoshop'],
+    viewOnItch: 'https://fantom-atom.itch.io/valimai-rider',
+    featured: false,
+  },
+  {
+    id: 10,
+    title: 'Social Status',
+    description: 'Chase clout in Social Status—a one-hour game dev challenge where you collect likes and hearts to boost your influence before time runs out!',
+    longDescription:
+      'Social Status is a simple, fast-paced game created in just one hour for a YouTube challenge. You play as a digital influencer trying to catch falling likes and hearts to increase your social status before the timer hits zero. Your best score is saved—so come back and chase even more clout!',
+    category: 'game',
+    image:
+      'https://img.itch.zone/aW1nLzE5Njk4MzYwLmpwZw==/315x250%23c/OF7BP2.jpg',
+    technologies: ['Unity', 'C#', 'Photoshop'],
+    viewOnItch: 'https://fantom-atom.itch.io/social-status',
     featured: false,
   },
 ];
