@@ -137,7 +137,7 @@ const Skills: React.FC = () => {
 
     overlay.style.opacity = '1';
     rafRef.current = requestAnimationFrame(() => {
-      overlay.style.background = `radial-gradient(circle at ${xPct}% ${yPct}%, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 80%)`;
+      overlay.style.background = `radial-gradient(circle at ${xPct}% ${yPct}%, rgba(73, 55, 84, 0.25) 0%, rgba(57, 8, 78, 0) 80%)`;
       rafRef.current = null;
     });
   };
@@ -288,34 +288,43 @@ const Skills: React.FC = () => {
           ))}
         </div>
 
-        {/* Learning in Practice */}
-        <div className="mt-16 text-center">
-          <div className="bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-2xl p-8 md:p-12">
-            <h3 className="text-3xl font-bold text-white mb-6">
-              Learning in Practice
-            </h3>
-            <p className="text-gray-300 text-lg mb-8 max-w-3xl mx-auto leading-relaxed">
-              I adapt to project demands by learning new methods and workflows to keep my work practical and up to date.
-            </p>
-            <div className="flex flex-wrap justify-center gap-3">
-              {[
-                'Agile Workflows',
-                'Code Reviews',
-                'Rapid Prototyping',
-                'Cross-functional Teams',
-                'Automated Testing',
-              ].map(label => (
-                <span
-                  key={label}
-                  className="px-4 py-2 bg-gray-700 text-gray-300 rounded-full text-sm relative overflow-hidden group transition-all duration-300"
-                >
-                  <span className="relative z-10">{label}</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
+      {/* Learning in Practice */}
+<div className="mt-16 text-center">
+  <div
+    className="
+      rounded-2xl p-8 md:p-12 overflow-hidden
+      bg-gradient-to-r from-purple-700 via-indigo-800 to-blue-900
+      bg-[length:300%_300%]
+      animate-gradient-animated
+    "
+  >
+    <h3 className="text-3xl font-bold text-white mb-6">
+      Learning in Practice
+    </h3>
+    <p className="text-gray-300 text-lg mb-8 max-w-3xl mx-auto leading-relaxed">
+      I adapt to project demands by learning new methods and workflows to
+      keep my work practical and up to date.
+    </p>
+    <div className="flex flex-wrap justify-center gap-3">
+      {[
+        'Agile Workflows',
+        'Code Reviews',
+        'Rapid Prototyping',
+        'Cross-functional Teams',
+        'Automated Testing',
+      ].map(label => (
+        <span
+          key={label}
+          className="px-4 py-2 bg-gray-700 text-gray-300 rounded-full text-sm relative overflow-hidden group transition-all duration-300"
+        >
+          <span className="relative z-10">{label}</span>
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        </span>
+      ))}
+    </div>
+  </div>
+</div>
+
       </div>
     </section>
   );
