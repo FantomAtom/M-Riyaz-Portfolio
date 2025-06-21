@@ -1,4 +1,4 @@
-import { Code2, Heart, Github, Linkedin } from 'lucide-react';
+import { Code2, Heart, Github, Linkedin, Store } from 'lucide-react';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -49,6 +49,8 @@ const Footer: React.FC = () => {
             <div className="flex space-x-4">
               <a 
                 href="https://github.com/FantomAtom" 
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center text-gray-400 hover:bg-gradient-to-r hover:from-purple-500 hover:to-blue-500 hover:text-white transition-all duration-300"
                 aria-label="GitHub"
               >
@@ -56,10 +58,21 @@ const Footer: React.FC = () => {
               </a>
               <a 
                 href="https://www.linkedin.com/in/m-riyaz-dev/" 
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center text-gray-400 hover:bg-gradient-to-r hover:from-purple-500 hover:to-blue-500 hover:text-white transition-all duration-300"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="w-5 h-5" />
+              </a>
+              <a 
+                href="https://fantom-atom.itch.io/" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center text-gray-400 hover:bg-gradient-to-r hover:from-purple-500 hover:to-blue-500 hover:text-white transition-all duration-300"
+                aria-label="Itch.io"
+              >
+                <Store className="w-5 h-5" />
               </a>
             </div>
           </div>

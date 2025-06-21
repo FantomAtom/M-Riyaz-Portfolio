@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Github, Linkedin } from 'lucide-react';
+import { Github, Linkedin, Store } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const roles = [
@@ -136,11 +136,29 @@ export default function Hero() {
         </div>
 
         <div className="flex items-center justify-center space-x-6 mt-12">
-          <a href="https://github.com/FantomAtom" className="text-gray-400 hover:text-white">
+          <a 
+            href="https://github.com/FantomAtom" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="text-gray-400 hover:text-white"
+          >
             <Github className="w-6 h-6" />
           </a>
-          <a href="https://www.linkedin.com/in/m-riyaz-dev/" className="text-gray-400 hover:text-white">
+          <a 
+            href="https://www.linkedin.com/in/m-riyaz-dev/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="text-gray-400 hover:text-white"
+          >
             <Linkedin className="w-6 h-6" />
+          </a>
+          <a 
+            href="https://fantom-atom.itch.io/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="text-gray-400 hover:text-white"
+          >
+            <Store className="w-6 h-6" />
           </a>
         </div>
       </div>

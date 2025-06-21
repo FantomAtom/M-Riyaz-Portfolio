@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Send, MapPin, Phone, Github, Linkedin } from 'lucide-react';
+import { Mail, Send, MapPin, Phone, Github, Linkedin, Store } from 'lucide-react';
 
 const WEB3FORMS_ACCESS_KEY = "0a037c19-b1a3-48ae-ad95-01639cf23f52";
 const MIN_SUBMIT_DELAY = 3000;
@@ -255,11 +255,11 @@ const Contact: React.FC = () => {
       <AnimatePresence>
         {result && (
           <motion.div
-            initial={{ x: '-100%', opacity: 0 }}
-            animate={{ x: '0%', opacity: 1 }}
-            exit={{ x: '100%', opacity: 0 }}
+            initial={{ y: '100%', opacity: 0 }}
+            animate={{ y: '0%', opacity: 1 }}
+            exit={{ y: '100%', opacity: 0 }}
             transition={{ duration: 0.5, ease: 'easeInOut' }}
-            className="fixed top-20 left-0 z-50 mx-auto w-full max-w-md px-4"
+            className="fixed bottom-8 left-0 right-0 z-50 mx-auto w-full max-w-md px-4"
           >
             <div
               className={`flex items-center px-6 py-3 rounded-full shadow-lg
@@ -351,6 +351,7 @@ const Contact: React.FC = () => {
                 {[
                   { icon: <Github />, url: 'https://github.com/FantomAtom' },
                   { icon: <Linkedin />, url: 'https://www.linkedin.com/in/m-riyaz-dev/' },
+                  { icon: <Store />, url: 'https://fantom-atom.itch.io/' },
                 ].map((soc, i) => (
                   <a
                     key={i}
