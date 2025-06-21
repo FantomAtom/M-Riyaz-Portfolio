@@ -1,50 +1,114 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Code, Database, Gamepad2, Palette, Globe, Smartphone } from 'lucide-react';
+import {
+  Gamepad2,
+  Smartphone,
+  Database,
+  Cloud,
+  ClipboardList,
+  GitBranch,
+  Palette,
+  Users,
+} from 'lucide-react';
 
 const skillCategories = [
   {
-    title: "Frontend Development",
-    icon: <Code className="w-6 h-6 text-white" />,
-    skills: ["React", "TypeScript", "Vue.js", "Tailwind CSS", "Next.js", "HTML5/CSS3"]
+    title: "Game & Interactive Development",
+    icon: <Gamepad2 className="w-6 h-6 text-white" />,
+    skills: [
+      "Unity & C#",
+      "VR Prototyping",
+      "Game Jam Workflows",
+      "Rapid Prototyping",
+      "Gameplay Mechanics",
+    ],
   },
   {
-    title: "Game Development",
-    icon: <Gamepad2 className="w-6 h-6 text-white" />,
-    skills: ["Unity", "C#", "Unreal Engine", "Godot", "WebGL", "Game Design"]
+    title: "App & Web Projects",
+    icon: <Smartphone className="w-6 h-6 text-white" />,
+    skills: [
+      "React Native",
+      "Firebase Integration",
+      "Android Studio Setup",
+      "Responsive UI Patterns",
+      "API Integration",
+    ],
   },
   {
     title: "Backend Development",
     icon: <Database className="w-6 h-6 text-white" />,
-    skills: ["Node.js", "Python", "PostgreSQL", "MongoDB", "Firebase", "REST APIs"]
+    skills: [
+      "Firestore & Auth",
+      "Serverless Functions",
+      "Database Design",
+      "Real-time Data",
+      "REST API Concepts",
+    ],
   },
   {
-    title: "Mobile Development",
-    icon: <Smartphone className="w-6 h-6 text-white" />,
-    skills: ["React Native", "Flutter", "iOS", "Android", "Expo", "PWA"]
+    title: "Cloud Services",
+    icon: <Cloud className="w-6 h-6 text-white" />,
+    skills: [
+      "AWS DynamoDB",
+      "AWS Lambda",
+      "API Gateway",
+      "CloudWatch Monitoring",
+      "S3 & Translate",
+    ],
   },
   {
-    title: "Design & UI/UX",
+    title: "Project Management & Collaboration",
+    icon: <ClipboardList className="w-6 h-6 text-white" />,
+    skills: [
+      "Agile/Scrum with Jira",
+      "Trello & Confluence",
+      "Time Management",
+      "Team Coordination",
+      "Task Prioritization",
+    ],
+  },
+  {
+    title: "Version Control & Deployment",
+    icon: <GitBranch className="w-6 h-6 text-white" />,
+    skills: [
+      "Git, GitHub & Bitbucket",
+      "Branching Strategies",
+      "Pull Requests & Code Reviews",
+      "CI/CD Pipelines",
+      "Automated Builds",
+    ],
+  },
+  {
+    title: "Creative & Multimedia",
     icon: <Palette className="w-6 h-6 text-white" />,
-    skills: ["Figma", "Adobe Creative Suite", "Blender", "UI Design", "Prototyping", "3D Modeling"]
+    skills: [
+      "Blender Modeling",
+      "Premiere Pro Editing",
+      "After Effects Basics",
+      "Audio Editing (FL Studio/Audacity)",
+      "UI/UX Mockups",
+    ],
   },
   {
-    title: "Web Technologies",
-    icon: <Globe className="w-6 h-6 text-white" />,
-    skills: ["WebGL", "Three.js", "Canvas API", "WebRTC", "GraphQL", "Socket.io"]
-  }
+    title: "Soft Skills & Communication",
+    icon: <Users className="w-6 h-6 text-white" />,
+    skills: [
+      "English & Tamil Fluency",
+      "Clear Technical Writing",
+      "Devlog & Video Presentations",
+      "Team Leadership",
+      "Client Collaboration",
+    ],
+  },
 ];
 
 const Skills: React.FC = () => {
   const overlayRef = useRef<HTMLDivElement | null>(null);
   const rafRef = useRef<number | null>(null);
-
-  // track shining state per card index
   const [shining, setShining] = useState<boolean[]>(() =>
     skillCategories.map(() => false)
   );
 
   const handleCardClick = (idx: number) => {
-    // trigger shine
     setShining(prev => {
       const next = [...prev];
       next[idx] = true;
@@ -53,7 +117,6 @@ const Skills: React.FC = () => {
   };
 
   const handleAnimationEnd = (idx: number) => {
-    // reset after animation
     setShining(prev => {
       const next = [...prev];
       next[idx] = false;
@@ -117,19 +180,20 @@ const Skills: React.FC = () => {
             Skills & Technologies
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            These are tools I’ve used so far. I keep exploring new ones as needed for each project,<br/>
-            constantly evolving with the latest industry standards.
+            These are areas I’ve worked in so far. I adapt and learn new approaches <br/> as each project requires.
+          </p>
+          <p className="text-gray-400 mt-2">
+            Always open to picking up new methods and tools when they add value.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {skillCategories.map((category, idx) => (
             <div
               key={idx}
               className="relative bg-gray-900 p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-transform transform hover:-translate-y-2 duration-300 overflow-hidden"
               onClick={() => handleCardClick(idx)}
             >
-              {/* Shine overlay */}
               {shining[idx] && (
                 <div
                   className="absolute inset-0 pointer-events-none"
@@ -171,12 +235,18 @@ const Skills: React.FC = () => {
               I adapt to project demands by learning new methods and workflows to keep my work practical and up to date.
             </p>
             <div className="flex flex-wrap justify-center gap-3">
-              {['Unity','C#','React Native','Firebase','DevOps','AWS','CI/CD',].map((tech) => (
+              {[
+                'Agile Workflows',
+                'Code Reviews',
+                'Rapid Prototyping',
+                'Cross-functional Teams',
+                'Automated Testing',
+              ].map((label) => (
                 <span
-                  key={tech}
+                  key={label}
                   className="px-4 py-2 bg-gray-700 text-gray-300 rounded-full text-sm relative overflow-hidden group transition-all duration-300"
                 >
-                  <span className="relative z-10">{tech}</span>
+                  <span className="relative z-10">{label}</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </span>
               ))}
