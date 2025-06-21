@@ -364,10 +364,7 @@ const ProjectModal: React.FC<ModalProps> = ({ project, onClose }) => {
   );
 };
 
-const ProjectCard: React.FC<{
-  project: Project;
-  onClick: () => void;
-}> = ({ project, onClick }) => {
+const ProjectCard: React.FC<{ project: Project; onClick: () => void }> = ({ project, onClick }) => {
   return (
     <div onClick={onClick} className="cursor-pointer group">
       <div className="rounded-xl p-px bg-gradient-to-r from-purple-500 to-blue-500 group-hover:scale-105 transform transition-all duration-300">
@@ -378,9 +375,33 @@ const ProjectCard: React.FC<{
               alt={project.title}
               className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+            {/* MOBILE OVERLAY ONLY */}
+            <div className="absolute inset-0 bg-black/60 flex flex-col justify-end p-4 md:hidden">
+              <h4 className="text-white text-lg font-semibold mb-1 line-clamp-2">
+                {project.title}
+              </h4>
+              <p className="text-gray-200 text-sm mb-3 line-clamp-2">
+                {project.description}
+              </p>
+              <div className="flex flex-wrap gap-1">
+                {project.technologies.slice(0, 4).map((tech) => (
+                  <span
+                    key={tech}
+                    className="bg-white/20 text-white text-xs px-2 py-1 rounded-full"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* DESKTOP/TABLET GRADIENT */}
+            <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 md:block hidden" />
           </div>
-          <div className="p-6">
+
+          {/* DESKTOP/TABLET CONTENT ONLY */}
+          <div className="p-6 hidden md:block">
             <div className="flex items-center justify-between mb-3">
               <h4 className="text-xl font-semibold text-white">{project.title}</h4>
               {project.featured && (
