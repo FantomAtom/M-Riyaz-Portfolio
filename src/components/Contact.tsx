@@ -1,32 +1,136 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Send, MapPin, Phone, Github, Linkedin } from 'lucide-react';
 
 const WEB3FORMS_ACCESS_KEY = "0a037c19-b1a3-48ae-ad95-01639cf23f52";
 const MIN_SUBMIT_DELAY = 3000;
-
-// Blacklisted emails
 const EMAIL_BLACKLIST = [
   "contactriyaz2727@gmail.com".toLowerCase(),
 ];
-
-// Simple email regex for client-side check
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// WaveformBackground: larger, slow-moving pulsating waves
+const WaveformBackground: React.FC<{
+  containerRef: React.RefObject<HTMLDivElement>;
+}> = ({ containerRef }) => {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const animationRef = useRef<number | null>(null);
+  const resizeObserverRef = useRef<ResizeObserver | null>(null);
+
+  const resizeCanvas = useCallback(() => {
+    const canvas = canvasRef.current;
+    const container = containerRef.current;
+    if (canvas && container) {
+      const rect = container.getBoundingClientRect();
+      canvas.width = rect.width * devicePixelRatio;
+      canvas.height = rect.height * devicePixelRatio;
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.scale(devicePixelRatio, devicePixelRatio);
+      }
+    }
+  }, [containerRef]);
+
+  useEffect(() => {
+    resizeCanvas();
+    if (containerRef.current) {
+      resizeObserverRef.current = new ResizeObserver(() => {
+        resizeCanvas();
+      });
+      resizeObserverRef.current.observe(containerRef.current);
+    }
+    return () => {
+      if (resizeObserverRef.current && containerRef.current) {
+        resizeObserverRef.current.unobserve(containerRef.current);
+      }
+    };
+  }, [containerRef, resizeCanvas]);
+
+  useEffect(() => {
+    let time = 0;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const draw = () => {
+      const container = containerRef.current;
+      if (!container) return;
+      const rect = container.getBoundingClientRect();
+      const w = rect.width;
+      const h = rect.height;
+
+      ctx.clearRect(0, 0, w, h);
+
+      // Larger base amplitude
+      const baseAmplitude = h * 0.05; // 5% of height
+      // Pulsation: slow oscillation
+      const pulsationSpeed = 0.002; // smaller => slower
+      const variation = h * 0.03; // amplitude variation range
+      const amp = baseAmplitude + Math.sin(time * pulsationSpeed) * variation;
+
+      // Wave parameters
+      const frequency = 0.003; // lower => longer waves
+      const speed = 0.005; // slow horizontal movement
+
+      const layers = 2; // fewer layers for simplicity
+      for (let i = 0; i < layers; i++) {
+        const phase = time * speed * (1 + i * 0.2);
+        const offsetY = h / 2 + (i - (layers-1)/2) * 20; // slight vertical offset per layer
+        ctx.beginPath();
+        for (let x = 0; x <= w; x += 3) {
+          const a = amp * (1 - i * 0.2);
+          const y = offsetY + Math.sin((x * frequency * Math.PI * 2) + phase) * a;
+          if (x === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        // Visible stroke: white with moderate opacity
+        const alpha = 0.15 - i * 0.03;
+        ctx.strokeStyle = `rgba(255,255,255,${alpha})`;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+
+      time += 1;
+      animationRef.current = requestAnimationFrame(draw);
+    };
+
+    animationRef.current = requestAnimationFrame(draw);
+    return () => {
+      if (animationRef.current) cancelAnimationFrame(animationRef.current);
+    };
+  }, [containerRef]);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 w-full h-full pointer-events-none"
+      style={{
+        opacity: 0.4,
+        // optional blend:
+        // mixBlendMode: 'overlay',
+      }}
+    />
+  );
+};
 
 const Contact: React.FC = () => {
   const [result, setResult] = useState("");
   const overlayRef = useRef<HTMLDivElement | null>(null);
   const rafRef = useRef<number | null>(null);
   const [mountTime] = useState(() => Date.now());
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   // Ripple overlay handlers...
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const overlay = overlayRef.current;
-    const rect = e.currentTarget.getBoundingClientRect();
     if (!overlay) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    const xPct = ((e.clientX - rect.left) / rect.width) * 100;
-    const yPct = ((e.clientY - rect.top) / rect.height) * 100;
+    const xPct = (x / rect.width) * 100;
+    const yPct = (y / rect.height) * 100;
     overlay.style.opacity = '1';
     rafRef.current = requestAnimationFrame(() => {
       overlay.style.background =
@@ -70,66 +174,42 @@ const Contact: React.FC = () => {
     const subject = formData.get('subject')?.toString().trim() || "";
     const message = formData.get('message')?.toString().trim() || "";
 
-    // Name
+    // Validations
     if (!name) {
-      setResult("Name is required.");
-      setTimeout(() => setResult(""), 3000);
-      return;
+      setResult("Name is required."); setTimeout(() => setResult(""), 3000); return;
     }
     if (name.length > 30) {
-      setResult("Name must be 30 characters or fewer.");
-      setTimeout(() => setResult(""), 3000);
-      return;
+      setResult("Name must be 30 characters or fewer."); setTimeout(() => setResult(""), 3000); return;
     }
-    // Email
     if (!email) {
-      setResult("Email is required.");
-      setTimeout(() => setResult(""), 3000);
-      return;
+      setResult("Email is required."); setTimeout(() => setResult(""), 3000); return;
     }
     if (email.length > 100) {
-      setResult("Email must be 100 characters or fewer.");
-      setTimeout(() => setResult(""), 3000);
-      return;
+      setResult("Email must be 100 characters or fewer."); setTimeout(() => setResult(""), 3000); return;
     }
     if (!EMAIL_REGEX.test(email)) {
-      setResult("Please enter a valid email address.");
-      setTimeout(() => setResult(""), 3000);
-      return;
+      setResult("Please enter a valid email address."); setTimeout(() => setResult(""), 3000); return;
     }
     if (EMAIL_BLACKLIST.includes(email)) {
-      setResult("Please use a different email address.");
-      setTimeout(() => setResult(""), 3000);
-      return;
+      setResult("Please use a different email address."); setTimeout(() => setResult(""), 3000); return;
     }
-    // Subject
     if (!subject) {
-      setResult("Subject is required.");
-      setTimeout(() => setResult(""), 3000);
-      return;
+      setResult("Subject is required."); setTimeout(() => setResult(""), 3000); return;
     }
     if (subject.length > 60) {
-      setResult("Subject must be 60 characters or fewer.");
-      setTimeout(() => setResult(""), 3000);
-      return;
+      setResult("Subject must be 60 characters or fewer."); setTimeout(() => setResult(""), 3000); return;
     }
-    // Message
     if (!message || message.length < 10) {
-      setResult("Message should be at least 10 characters.");
-      setTimeout(() => setResult(""), 3000);
-      return;
+      setResult("Message should be at least 10 characters."); setTimeout(() => setResult(""), 3000); return;
     }
     if (message.length > 1000) {
-      setResult("Message is too long (max 1000 characters).");
-      setTimeout(() => setResult(""), 3000);
-      return;
+      setResult("Message is too long (max 1000 characters)."); setTimeout(() => setResult(""), 3000); return;
     }
 
-    // All good: send
+    // Send
     setResult("Sending...");
     formData.append("access_key", WEB3FORMS_ACCESS_KEY);
     formData.append("from_name", "Portfolio Contact Form");
-
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
@@ -156,7 +236,11 @@ const Contact: React.FC = () => {
       className="relative py-20 bg-gray-900 text-white overflow-hidden"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      ref={containerRef}
     >
+      {/* Waveform background */}
+      <WaveformBackground containerRef={containerRef} />
+
       {/* Ripple overlay */}
       <div
         ref={overlayRef}
@@ -179,11 +263,11 @@ const Contact: React.FC = () => {
           >
             <div
               className={`flex items-center px-6 py-3 rounded-full shadow-lg
-                ${result.toLowerCase().includes("sent") 
+                ${result.toLowerCase().includes("sent")
                   ? "bg-gradient-to-r from-green-500 to-teal-400 text-white"
                   : result.toLowerCase().includes("sending")
-                  ? "bg-gray-700 text-white"
-                  : "bg-red-500 text-white"
+                    ? "bg-gray-700 text-white"
+                    : "bg-red-500 text-white"
                 }`}
             >
               {result.toLowerCase().includes("sending") ? (
@@ -250,6 +334,7 @@ const Contact: React.FC = () => {
             {[
               { icon: <Mail />, label: 'Email', value: 'ContactRiyaz2727@gmail.com' },
               { icon: <Phone />, label: 'Phone', value: '+91 9344735581' },
+              { icon: <MapPin />, label: 'Location', value: 'Your City, Country' },
             ].map((item, i) => (
               <div key={i} className="flex items-center space-x-4">
                 <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
@@ -299,16 +384,6 @@ const Contact: React.FC = () => {
                 style={{ display: 'none' }}
               />
 
-              {/* Subject */}
-              <input
-                type="text"
-                name="subject"
-                placeholder="Subject"
-                required
-                maxLength={60}
-                className="w-full px-4 py-3 bg-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 transition"
-              />
-
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Name */}
                 <input
@@ -319,7 +394,7 @@ const Contact: React.FC = () => {
                   maxLength={30}
                   className="w-full px-4 py-3 bg-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 transition"
                 />
-                {/* Email with maxLength & pattern */}
+                {/* Email */}
                 <input
                   type="email"
                   name="email"
@@ -330,6 +405,16 @@ const Contact: React.FC = () => {
                   className="w-full px-4 py-3 bg-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 transition"
                 />
               </div>
+
+              {/* Subject */}
+              <input
+                type="text"
+                name="subject"
+                placeholder="Subject"
+                required
+                maxLength={60}
+                className="w-full px-4 py-3 bg-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 transition"
+              />
 
               {/* Message */}
               <textarea
