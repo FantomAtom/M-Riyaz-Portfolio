@@ -6,10 +6,12 @@ import {
   Smartphone,
   Wrench,
   Filter,
+  Store,
 } from 'lucide-react';
 
 import talim from '../assets/images/talim.png';
 import busbeat from '../assets/images/busbeat.svg';
+import lightmaker from '../assets/images/lightmaker.png';
 
 interface Project {
   id: number;
@@ -19,9 +21,10 @@ interface Project {
   category: 'game' | 'app' | 'other';
   image: string;
   technologies: string[];
-  // For Talim, we use these instead of github/live demo:
+  // For Other projects, we use these instead of github/live demo:
   viewMoreUrl?: string;
   playstoreUrl?: string;
+  viewOnItch?: string;
   // Keep legacy fields optional if you have other projects using them
   githubUrl?: string;
   liveUrl?: string;
@@ -65,17 +68,15 @@ const projects: Project[] = [
   },
   {
     id: 3,
-    title: 'E-Commerce Platform',
-    description: 'Full-stack e-commerce solution with modern UI and payment integration.',
+    title: 'Light Maker',
+    description: 'Face your fears in Light Maker—a surreal adventure where you wield the power of light to battle nightmares and explore a haunting dream world.',
     longDescription:
-      'A complete e-commerce platform with user authentication, product management, shopping cart, payment processing, and admin dashboard. Built with modern technologies for scalability and performance.',
-    category: 'app',
-    image:
-      'https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=600',
-    technologies: ['React', 'TypeScript', 'Stripe', 'PostgreSQL'],
-    githubUrl: '#',
-    liveUrl: '#',
-    featured: false,
+      'Light Maker is an atmospheric action-adventure game where you play as a frightened child navigating through a dark, dreamlike world. Guided by a sentient light companion, you\'ll collect magical shards to upgrade your light powers, combat ghostly foes, and illuminate the path through your deepest fears.',
+    category: 'game',
+    image: lightmaker,
+    technologies: ['Unity', 'C#', 'FMOD', 'Blender'],
+    viewOnItch: 'https://fantom-atom.itch.io/light-maker',
+    featured: true,
   },
   {
     id: 4,
@@ -103,7 +104,7 @@ const projects: Project[] = [
     technologies: ['Python', 'TensorFlow', 'Flask', 'React'],
     githubUrl: '#',
     liveUrl: '#',
-    featured: true,
+    featured: false,
   },
   {
     id: 6,
@@ -223,6 +224,17 @@ const ProjectModal: React.FC<ModalProps> = ({ project, onClose }) => {
               >
                 <Smartphone className="w-5 h-5" />
                 <span>Playstore</span>
+              </a>
+            )}
+            {project.viewOnItch && (
+              <a
+                href={project.viewOnItch}
+                className="flex items-center space-x-2 bg-gradient-to-r from-purple-500 to-blue-500 text-white px-6 py-3 rounded-full hover:shadow-lg transition-all duration-300"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Store className="w-5 h-5" />
+                <span>View on Itch</span>
               </a>
             )}
             {/* For other projects that might have github/liveUrl: */}
