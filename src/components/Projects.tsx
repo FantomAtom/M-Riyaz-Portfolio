@@ -8,6 +8,8 @@ import {
   Filter,
 } from 'lucide-react';
 
+import talim from '../assets/images/talim.png';
+
 interface Project {
   id: number;
   title: string;
@@ -16,6 +18,10 @@ interface Project {
   category: 'game' | 'app' | 'other';
   image: string;
   technologies: string[];
+  // For Talim, we use these instead of github/live demo:
+  viewMoreUrl?: string;
+  playstoreUrl?: string;
+  // Keep legacy fields optional if you have other projects using them
   githubUrl?: string;
   liveUrl?: string;
   featured: boolean;
@@ -24,16 +30,15 @@ interface Project {
 const projects: Project[] = [
   {
     id: 1,
-    title: 'Epic Adventure RPG',
-    description: 'A fantasy RPG with immersive storytelling and dynamic combat system.',
+    title: 'Talim',
+    description: 'Discover Islamic knowledge at your own pace with Talim – an interactive app featuring lessons on Islam. Learn anytime, anywhere, and deepen your connection to Islam.',
     longDescription:
-      'An epic fantasy RPG featuring a rich storyline, dynamic combat system, character progression, and beautiful hand-crafted environments. Built with Unity and C#, featuring custom shaders and particle effects.',
-    category: 'game',
-    image:
-      'https://images.pexels.com/photos/442576/pexels-photo-442576.jpeg?auto=compress&cs=tinysrgb&w=600',
-    technologies: ['Unity', 'C#', 'Blender', 'Photoshop'],
-    githubUrl: '#',
-    liveUrl: '#',
+      'Talim is an interactive app designed to simplify Islamic learning. With lessons on the Quran, Prophets’ biographies, and Hadith, the app offers a user-friendly experience for learners of all levels. Features include personalized progress tracking, quizzes, badges, and leaderboards to keep you motivated. Accessible on all devices, Talim makes learning about Islam easy, engaging, and flexible.',
+    category: 'app',
+    image: talim, // use imported image
+    technologies: ['Unity', 'C#', 'AWS DynamoDB', 'AWS Lambda'], // adjust as appropriate
+    viewMoreUrl: 'https://akhlaqventures.com/products/talim',
+    playstoreUrl: 'https://play.google.com/store/apps/details?id=com.AkhlaqVentures.talim',
     featured: true,
   },
   {
@@ -189,6 +194,30 @@ const ProjectModal: React.FC<ModalProps> = ({ project, onClose }) => {
             ))}
           </div>
           <div className="flex flex-wrap gap-4">
+            {/* Talim: show View More and Playstore if URLs exist */}
+            {project.viewMoreUrl && (
+              <a
+                href={project.viewMoreUrl}
+                className="flex items-center space-x-2 bg-gradient-to-r from-purple-500 to-blue-500 text-white px-6 py-3 rounded-full hover:shadow-lg transition-all duration-300"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ExternalLink className="w-5 h-5" />
+                <span>View More</span>
+              </a>
+            )}
+            {project.playstoreUrl && (
+              <a
+                href={project.playstoreUrl}
+                className="flex items-center space-x-2 bg-green-600 text-white px-6 py-3 rounded-full hover:bg-green-700 transition-all duration-300"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Smartphone className="w-5 h-5" />
+                <span>Playstore</span>
+              </a>
+            )}
+            {/* For other projects that might have github/liveUrl: */}
             {project.githubUrl && (
               <a
                 href={project.githubUrl}
