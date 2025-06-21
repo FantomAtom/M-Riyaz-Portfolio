@@ -100,19 +100,19 @@ export default function Hero() {
 
       <div className="container mx-auto px-6 py-20 relative z-10 text-center">
         {/* Gradient greeting */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="
-            text-3xl md:text-7xl font-bold mb-6
-            bg-gradient-to-r from-purple-400 to-blue-400
-            bg-clip-text text-transparent
-            leading-tight md:leading-tight
-          "
-        >
-          Hey there! I&apos;m Riyaz M
-        </motion.h1>
+       <motion.h1
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="
+          text-3xl md:text-7xl font-bold mb-6
+          bg-gradient-to-r from-purple-400 to-blue-400
+          bg-clip-text text-transparent
+          leading-tight md:leading-tight
+        "
+      >
+        Hey there! I&apos;m <span className="whitespace-nowrap">Riyaz&nbsp;M</span>
+      </motion.h1>
 
         {/* Typing effect line with dynamic article */}
         <h2 className="text-3xl md:text-4xl font-semibold h-12 mb-6">

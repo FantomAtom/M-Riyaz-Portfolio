@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import { Code, Gamepad2, Palette, Zap } from 'lucide-react';
 import HeroImage from '../assets/images/colored.png';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Navigation, Autoplay } from 'swiper/modules';
+import { Navigation, Autoplay } from 'swiper/modules';
 
 // required Swiper styles
 import 'swiper/css';
@@ -20,7 +20,7 @@ const highlights: Highlight[] = [
     icon: <Gamepad2 className="w-6 h-6" />,
     title: 'Game Development',
     description:
-      'Building Unity games and prototypes in C#, including VR experiments and jam entries that focus on engaging mechanics.',
+      'Building Unity games and prototypes in C#, including VR and jam entries that focus on engaging mechanics.',
   },
   {
     icon: <Code className="w-6 h-6" />,
@@ -32,7 +32,7 @@ const highlights: Highlight[] = [
     icon: <Palette className="w-6 h-6" />,
     title: '3D & Creative Design',
     description:
-      'Modeling assets in Blender and crafting UI/UX elements, plus video editing for devlogs using Premiere Pro and Audacity.',
+      'Modeling assets in Blender and crafting UI/UX elements, plus video editing for devlogs using Premiere Pro.',
   },
   {
     icon: <Zap className="w-6 h-6" />,
@@ -211,7 +211,7 @@ const About: React.FC = () => {
           {/* Text side */}
           <div className="text-center md:text-left">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">About Me</h2>
-            <p className="text-xl text-gray-300 max-w-3xl leading-relaxed mx-auto md:mx-0">
+            <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl leading-relaxed mx-auto md:mx-0">
               I’m Riyaz M, a Unity and full-stack developer with 4+ years of experience delivering
               end-to-end projects. I’ve built and deployed apps using C#, React Native, Firebase, and
               AWS services, and crafted 3D assets in Blender with audio pipelines in FL Studio. I
@@ -292,39 +292,38 @@ const About: React.FC = () => {
           </div>
         </div>
 
-{/* Highlights carousel */}
-<div className="mb-16 mt-8">
-  <Swiper
-  modules={[Pagination, Navigation, Autoplay]}
-  spaceBetween={16}
-  slidesPerView={1}
-  navigation
-  pagination={{ clickable: true }}
-  autoplay={{
-    delay: 2000,
-    disableOnInteraction: false,
-  }}
-  loop
-  breakpoints={{
-    768: {
-      slidesPerView: 2,
-      spaceBetween: 24,
-    },
-    1024: {
-      slidesPerView: 4,
-      spaceBetween: 32,
-    },
-  }}
-  className="overflow-visible"
->
-  {highlights.map((h, idx) => (
-    <SwiperSlide key={idx} className="!overflow-visible">
-      <TiltCard highlight={h} />
-    </SwiperSlide>
-  ))}
-</Swiper>
-</div>
-
+      {/* Highlights carousel */}
+      <div className="mb-16 mt-8">
+        <Swiper
+        modules={[Navigation, Autoplay]}
+        spaceBetween={16}
+        slidesPerView={1}
+        navigation
+        pagination={{ clickable: true }}
+        autoplay={{
+          delay: 2000,
+          disableOnInteraction: false,
+        }}
+        loop
+        breakpoints={{
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 24,
+          },
+          1024: {
+            slidesPerView: 4,
+            spaceBetween: 32,
+          },
+        }}
+        className="overflow-visible"
+      >
+        {highlights.map((h, idx) => (
+          <SwiperSlide key={idx} className="!overflow-visible">
+            <TiltCard highlight={h} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+      </div>
 
         <div className="mt-16 bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-2xl p-8 md:p-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
