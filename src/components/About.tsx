@@ -1,7 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { Code, Gamepad2, Palette, Zap } from 'lucide-react';
-import HeroImage from '../assets/images/uncolored.png';
-import HeroHighlight from '../assets/images/colored.png';
+import HeroImage from '../assets/images/colored.png';
 
 type Highlight = {
   icon: React.ReactNode;
@@ -247,28 +246,42 @@ const About: React.FC = () => {
                 />
               </div>
 
-              {/* Hero image */}
-              <img
-                src={HeroImage}
-                alt="About me"
-                className="
-                  absolute 
-                  bottom-0 
-                  left-1/2 
-                  w-72 md:w-80
-                  transform -translate-x-1/2
-                  transition-transform duration-300 
-                  group-hover:scale-105
-                  origin-bottom
-                  group-hover:-rotate-3
-                "
-                style={{
-                  objectFit: 'contain',
-                  maxHeight: '120%',
-                  top: '-20%',
-                }}
-              />
-            </div>
+          {/* Hero image */}
+          <img
+            src={HeroImage}
+            alt="About me"
+            className="
+              absolute 
+              bottom-0 
+              left-1/2 
+              w-72 md:w-80
+              transform -translate-x-1/2
+              origin-bottom
+
+              /* tilt + scale as before */
+              group-hover:scale-105
+              transition-transform duration-300
+              group-hover:-rotate-3
+
+              /* enable filter rendering */
+              filter  
+            "
+            style={{
+              objectFit: 'contain',
+              maxHeight: '120%',
+              top: '-20%',
+              willChange: 'filter, transform',
+              transition: 'filter 0.3s ease-in-out, transform 0.3s ease',
+              filter: 'grayscale(100%)',
+            }}
+            onMouseEnter={e => {
+              (e.currentTarget as HTMLImageElement).style.filter = 'grayscale(0%)';
+            }}
+            onMouseLeave={e => {
+              (e.currentTarget as HTMLImageElement).style.filter = 'grayscale(100%)';
+            }}
+          />
+          </div>
           </div>
         </div>
 
