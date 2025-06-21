@@ -186,6 +186,19 @@ const projects: Project[] = [
     viewOnYT: 'https://www.youtube.com/@UltrioStudios',
     featured: false,
   },
+  {
+    id: 12,
+    title: 'My Sketchfab',
+    description: 'I explored 3D modeling with Blender and shared my early works on Sketchfab as part of my learning journey into game art and asset creation.',
+    longDescription:
+      'Back when I was learning the basics of 3D modeling, I used Blender to create simple props and environment pieces, and uploaded them to Sketchfab to document my progress. It was a fun way to learn about modeling, texturing, and presentation, and gave me a better understanding of how game assets are built. While I’m no longer active on the platform, the uploads still represent an important part of my creative journey.',
+    category: 'other',
+    image:
+      'https://media.sketchfab.com/models/e400557705fa4fdb89a63ec9dabb825a/thumbnails/9bcf58e542534a429274ffa758bf4230/1920x1080.jpeg',
+    technologies: ['Blender'],
+    viewMoreUrl: 'https://sketchfab.com/fantom_atom',
+    featured: false,
+  },
 ];
 
 const categories = [
