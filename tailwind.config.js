@@ -23,13 +23,18 @@ export default {
           '0%':   { transform: 'translateY(0px)' },
           '50%':  { transform: 'translateY(-10px)' },
           '100%': { transform: 'translateY(0px)' },
-        }
+        },
+        shine: {
+          '0%':   { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(100%)' },
+        },
       },
       animation: {
         blob: 'blob 7s infinite',
         twinkle: 'twinkle 4s ease-in-out infinite',
         sparkle: 'sparkle 3s ease-in-out infinite',
         float: 'float 6s ease-in-out infinite',
+        shine: 'shine 1s ease-in-out',
       },
     },
   },

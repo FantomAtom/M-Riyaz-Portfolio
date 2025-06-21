@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Code, Database, Gamepad2, Palette, Globe, Smartphone } from 'lucide-react';
 
 const skillCategories = [
@@ -37,6 +37,29 @@ const skillCategories = [
 const Skills: React.FC = () => {
   const overlayRef = useRef<HTMLDivElement | null>(null);
   const rafRef = useRef<number | null>(null);
+
+  // track shining state per card index
+  const [shining, setShining] = useState<boolean[]>(() =>
+    skillCategories.map(() => false)
+  );
+
+  const handleCardClick = (idx: number) => {
+    // trigger shine
+    setShining(prev => {
+      const next = [...prev];
+      next[idx] = true;
+      return next;
+    });
+  };
+
+  const handleAnimationEnd = (idx: number) => {
+    // reset after animation
+    setShining(prev => {
+      const next = [...prev];
+      next[idx] = false;
+      return next;
+    });
+  };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const section = e.currentTarget;
@@ -103,8 +126,22 @@ const Skills: React.FC = () => {
           {skillCategories.map((category, idx) => (
             <div
               key={idx}
-              className="bg-gray-900 p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-transform transform hover:-translate-y-2 duration-300"
+              className="relative bg-gray-900 p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-transform transform hover:-translate-y-2 duration-300 overflow-hidden"
+              onClick={() => handleCardClick(idx)}
             >
+              {/* Shine overlay */}
+              {shining[idx] && (
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  onAnimationEnd={() => handleAnimationEnd(idx)}
+                >
+                  <div
+                    className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent animate-shine"
+                    style={{ transform: 'translateX(-100%)' }}
+                  />
+                </div>
+              )}
+
               <div className="flex items-center mb-6">
                 <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg flex items-center justify-center mr-4">
                   {category.icon}
@@ -153,4 +190,3 @@ const Skills: React.FC = () => {
 };
 
 export default Skills;
-
