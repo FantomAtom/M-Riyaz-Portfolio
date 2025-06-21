@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { Code, Gamepad2, Palette, Zap } from 'lucide-react';
+import HeroImage from '../assets/images/test.png'; // your image import
 
 type Highlight = {
   icon: React.ReactNode;
@@ -7,7 +8,6 @@ type Highlight = {
   description: string;
 };
 
-// Your highlights array as before
 const highlights: Highlight[] = [
   {
     icon: <Gamepad2 className="w-6 h-6" />,
@@ -31,7 +31,6 @@ const highlights: Highlight[] = [
   },
 ];
 
-// Tilt-on-hover card component (unchanged)
 const TiltCard: React.FC<{ highlight: Highlight }> = ({ highlight }) => {
   const cardRef = useRef<HTMLDivElement | null>(null);
   const rafRef = useRef<number | null>(null);
@@ -141,39 +140,49 @@ const About: React.FC = () => {
       {/* Enhanced animated stars background */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Base star layer */}
-        <div className="absolute inset-0" style={{ 
-          backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px)',
-          backgroundSize: '50px 50px'
-        }}></div>
-        
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px)',
+            backgroundSize: '50px 50px',
+          }}
+        ></div>
         {/* Twinkling stars layer 1 */}
-        <div className="absolute inset-0 animate-twinkle" style={{ 
-          backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.3) 1px, transparent 1px)',
-          backgroundSize: '80px 80px',
-          animationDelay: '0s'
-        }}></div>
-        
+        <div
+          className="absolute inset-0 animate-twinkle"
+          style={{
+            backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.3) 1px, transparent 1px)',
+            backgroundSize: '80px 80px',
+            animationDelay: '0s',
+          }}
+        ></div>
         {/* Twinkling stars layer 2 */}
-        <div className="absolute inset-0 animate-twinkle" style={{ 
-          backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.25) 1px, transparent 1px)',
-          backgroundSize: '120px 120px',
-          animationDelay: '1s'
-        }}></div>
-        
-        {/* Sparkling stars - larger and more prominent */}
-        <div className="absolute inset-0 animate-sparkle" style={{ 
-          backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.4) 2px, transparent 2px)',
-          backgroundSize: '200px 200px',
-          animationDelay: '0.5s'
-        }}></div>
-        
-        {/* Floating stars layer */}
-        <div className="absolute inset-0 animate-float" style={{ 
-          backgroundImage: 'radial-gradient(circle, rgba(180,180,255,0.3) 1.5px, transparent 1.5px)',
-          backgroundSize: '150px 150px',
-        }}></div>
-        
-        {/* Glowing nebula effect */}
+        <div
+          className="absolute inset-0 animate-twinkle"
+          style={{
+            backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.25) 1px, transparent 1px)',
+            backgroundSize: '120px 120px',
+            animationDelay: '1s',
+          }}
+        ></div>
+        {/* Sparkling stars */}
+        <div
+          className="absolute inset-0 animate-sparkle"
+          style={{
+            backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.4) 2px, transparent 2px)',
+            backgroundSize: '200px 200px',
+            animationDelay: '0.5s',
+          }}
+        ></div>
+        {/* Floating stars */}
+        <div
+          className="absolute inset-0 animate-float"
+          style={{
+            backgroundImage: 'radial-gradient(circle, rgba(180,180,255,0.3) 1.5px, transparent 1.5px)',
+            backgroundSize: '150px 150px',
+          }}
+        ></div>
+        {/* Glowing nebula */}
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/15 via-transparent to-blue-900/15"></div>
       </div>
 
@@ -186,16 +195,61 @@ const About: React.FC = () => {
 
       {/* Main content */}
       <div className="container mx-auto px-6 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">About Me</h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            I'm a passionate developer who loves creating digital experiences that make a difference. 
-            With expertise spanning game development, web applications, and creative technology, 
-            I bring ideas to life through code and design.
-          </p>
+        {/* Two-column intro: text left, image right */}
+        <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-8 mb-36">
+          {/* Text side */}
+          <div className="text-center md:text-left">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">About Me</h2>
+            <p className="text-xl text-gray-300 max-w-3xl leading-relaxed mx-auto md:mx-0">
+              I'm a passionate developer who loves creating digital experiences that make a difference.
+              With expertise spanning game development, web applications, and creative technology,
+              I bring ideas to life through code and design.
+            </p>
+          </div>
+
+          {/* Image side */}
+          <div className="flex justify-center md:justify-end pt-10">
+            {/* Container with overflow-visible so image can peek */}
+            <div className="relative group overflow-visible mt-16 md:mt-10">
+              {/* White box behind: rounded edges + shadow */}
+              <div
+                className="
+                  bg-white 
+                  w-72 h-96 
+                  md:w-80 md:h-[28rem] 
+                  rounded-2xl 
+                  shadow-lg 
+                  transition-transform duration-300 
+                  group-hover:scale-105 
+                  group-hover:shadow-2xl
+                "
+              ></div>
+              {/* Image: absolute positioning adjusted to show full head */}
+              <img
+                src={HeroImage}
+                alt="About me"
+                className="
+                  absolute 
+                  bottom-0 
+                  left-1/2 
+                  w-72 md:w-80
+                  transform -translate-x-1/2
+                  hover:cursor-pointer 
+                  transition-transform duration-300 
+                  group-hover:scale-105
+                "
+                style={{
+                  objectFit: 'contain',
+                  maxHeight: '120%',
+                  top: '-20%'
+                }}
+              />
+            </div>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+        {/* Highlights cards - increased top margin */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16 mt-8">
           {highlights.map((h, idx) => (
             <TiltCard key={idx} highlight={h} />
           ))}
@@ -208,7 +262,7 @@ const About: React.FC = () => {
                 Let's Build Something Amazing Together
               </h3>
               <p className="text-gray-300 text-lg leading-relaxed mb-6">
-                Whether you're looking for a game that captivates players, an app that solves real problems, 
+                Whether you're looking for a game that captivates players, an app that solves real problems,
                 or a creative solution that stands out from the crowd, I'm here to bring your vision to life.
               </p>
               <div className="flex flex-wrap gap-3">
