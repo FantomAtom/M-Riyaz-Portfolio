@@ -334,7 +334,6 @@ const Contact: React.FC = () => {
             {[
               { icon: <Mail />, label: 'Email', value: 'ContactRiyaz2727@gmail.com' },
               { icon: <Phone />, label: 'Phone', value: '+91 9344735581' },
-              { icon: <MapPin />, label: 'Location', value: 'Your City, Country' },
             ].map((item, i) => (
               <div key={i} className="flex items-center space-x-4">
                 <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
