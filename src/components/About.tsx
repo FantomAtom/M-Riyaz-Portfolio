@@ -12,22 +12,22 @@ const highlights: Highlight[] = [
   {
     icon: <Gamepad2 className="w-6 h-6" />,
     title: 'Game Development',
-    description: 'Creating engaging and immersive gaming experiences with modern engines and frameworks.',
+    description: 'Building Unity games and prototypes in C#, including VR experiments and jam entries that focus on engaging mechanics.',
   },
   {
     icon: <Code className="w-6 h-6" />,
     title: 'App Development',
-    description: 'Building responsive web and mobile applications with cutting-edge technologies.',
+    description: 'Creating Fullstack React Native apps, delivering seamless mobile experiences like Dish Dash and BusBeat.',
   },
   {
     icon: <Palette className="w-6 h-6" />,
-    title: 'Creative Design',
-    description: 'Designing beautiful user interfaces and experiences that delight users.',
+    title: '3D & Creative Design',
+    description: 'Modeling assets in Blender and crafting UI/UX elements, plus video editing for devlogs using Premiere Pro and Audacity.',
   },
   {
     icon: <Zap className="w-6 h-6" />,
-    title: 'Innovation',
-    description: "Always exploring new technologies and pushing the boundaries of what's possible.",
+    title: 'Rapid Prototyping',
+    description: 'Experimenting with game jams, quick challenges, and new tools—iterating fast to learn and innovate continuously.',
   },
 ];
 
@@ -201,9 +201,7 @@ const About: React.FC = () => {
           <div className="text-center md:text-left">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">About Me</h2>
             <p className="text-xl text-gray-300 max-w-3xl leading-relaxed mx-auto md:mx-0">
-              I'm a passionate developer who loves creating digital experiences that make a difference.
-              With expertise spanning game development, web applications, and creative technology,
-              I bring ideas to life through code and design.
+                I’m Riyaz M, a Unity and full-stack developer with 4+ years of experience delivering end-to-end projects. I’ve built and deployed apps using C#, React Native, Firebase, and AWS services, and crafted 3D assets in Blender with audio pipelines in FL Studio. I excel in rapid prototyping, Agile collaboration, performance optimization, and solving complex technical challenges to create engaging user experiences.
             </p>
           </div>
 
@@ -223,9 +221,10 @@ const About: React.FC = () => {
                   group-hover:scale-105 
                   group-hover:shadow-2xl
                 "
-              ></div>
-              {/* Image: absolute positioning adjusted to show full head */}
-              <img
+              >
+              
+              </div>
+              {/* <img
                 src={HeroImage}
                 alt="About me"
                 className="
@@ -243,7 +242,7 @@ const About: React.FC = () => {
                   maxHeight: '120%',
                   top: '-20%'
                 }}
-              />
+              /> */}
             </div>
           </div>
         </div>
@@ -265,21 +264,11 @@ const About: React.FC = () => {
                 Whether you're looking for a game that captivates players, an app that solves real problems,
                 or a creative solution that stands out from the crowd, I'm here to bring your vision to life.
               </p>
-              <div className="flex flex-wrap gap-3">
-                {['React', 'Unity', 'TypeScript', 'Node.js', 'Python', 'C#'].map((tech) => (
-                  <span
-                    key={tech}
-                    className="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
             </div>
             <div className="text-center lg:text-right">
               <div className="inline-block p-4 bg-gradient-to-r from-purple-500 to-blue-500 rounded-2xl">
                 <div className="w-48 h-48 bg-gray-800 rounded-xl flex items-center justify-center">
-                  <span className="text-6xl">🚀</span>
+                  <span className="text-8xl">🚀</span>
                 </div>
               </div>
             </div>

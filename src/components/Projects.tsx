@@ -14,7 +14,6 @@ import talim from '../assets/images/talim.png';
 import busbeat from '../assets/images/busbeat.svg';
 import lightmaker from '../assets/images/lightmaker.png';
 import skillshot from '../assets/images/skillshot.png';
-import knockmaniac from '../assets/images/knockmaniac.png';
 
 interface Project {
   id: number;
