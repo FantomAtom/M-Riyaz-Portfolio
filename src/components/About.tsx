@@ -1,6 +1,13 @@
 import React, { useRef, useEffect } from 'react';
 import { Code, Gamepad2, Palette, Zap } from 'lucide-react';
 import HeroImage from '../assets/images/colored.png';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, Navigation, Autoplay } from 'swiper/modules';
+
+// required Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
 type Highlight = {
   icon: React.ReactNode;
@@ -285,12 +292,39 @@ const About: React.FC = () => {
           </div>
         </div>
 
-        {/* Highlights cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16 mt-8">
-          {highlights.map((h, idx) => (
-            <TiltCard key={idx} highlight={h} />
-          ))}
-        </div>
+{/* Highlights carousel */}
+<div className="mb-16 mt-8">
+  <Swiper
+  modules={[Pagination, Navigation, Autoplay]}
+  spaceBetween={16}
+  slidesPerView={1}
+  navigation
+  pagination={{ clickable: true }}
+  autoplay={{
+    delay: 2000,
+    disableOnInteraction: false,
+  }}
+  loop
+  breakpoints={{
+    768: {
+      slidesPerView: 2,
+      spaceBetween: 24,
+    },
+    1024: {
+      slidesPerView: 4,
+      spaceBetween: 32,
+    },
+  }}
+  className="overflow-visible"
+>
+  {highlights.map((h, idx) => (
+    <SwiperSlide key={idx} className="!overflow-visible">
+      <TiltCard highlight={h} />
+    </SwiperSlide>
+  ))}
+</Swiper>
+</div>
+
 
         <div className="mt-16 bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-2xl p-8 md:p-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">

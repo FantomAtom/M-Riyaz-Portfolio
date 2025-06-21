@@ -28,4 +28,28 @@ html {
   clip-path: inset(100% 0 0 0);
 }
 
+/* Allow tilt overflow globally */
+.swiper,
+.swiper-wrapper,
+.swiper-slide {
+  overflow: visible !important;
+}
+
+/* Hide prev/next arrows on screens below 1024px */
+@media (max-width: 1023px) {
+  .swiper-button-prev,
+  .swiper-button-next {
+    display: none;
+  }
+}
+
+/* Optional: style pagination bullets */
+.swiper-pagination-bullet {
+  background: rgba(255, 255, 255, 0.6);
+}
+.swiper-pagination-bullet-active {
+  background: white;
+}
+
+
 
