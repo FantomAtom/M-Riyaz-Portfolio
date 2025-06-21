@@ -117,7 +117,7 @@ const Skills: React.FC = () => {
             Skills & Technologies
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            A comprehensive toolkit spanning multiple disciplines and technologies,<br/>
+            These are tools I’ve used so far. I keep exploring new ones as needed for each project,<br/>
             constantly evolving with the latest industry standards.
           </p>
         </div>
@@ -165,14 +165,13 @@ const Skills: React.FC = () => {
         <div className="mt-16 text-center">
           <div className="bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-2xl p-8 md:p-12">
             <h3 className="text-3xl font-bold text-white mb-6">
-              Always Learning, Always Growing
+              Learning in Practice
             </h3>
             <p className="text-gray-300 text-lg mb-8 max-w-3xl mx-auto leading-relaxed">
-              The world of technology moves fast, and I move with it. I'm constantly exploring new frameworks,<br/>
-              languages, and methodologies to stay at the cutting edge of development.
+              I adapt to project demands by learning new methods and workflows to keep my work practical and up to date.
             </p>
             <div className="flex flex-wrap justify-center gap-3">
-              {['AI/ML', 'Blockchain', 'AR/VR', 'IoT', 'Cloud Computing', 'DevOps'].map((tech) => (
+              {['Unity','C#','React Native','Firebase','DevOps','AWS','CI/CD',].map((tech) => (
                 <span
                   key={tech}
                   className="px-4 py-2 bg-gray-700 text-gray-300 rounded-full text-sm relative overflow-hidden group transition-all duration-300"
