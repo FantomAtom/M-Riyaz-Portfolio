@@ -22,3 +22,10 @@ html {
   scrollbar-width: none;
 }
 
+/* // smooth wipe-up of the B&W image on hover of its parent '.group' */
+.group:hover img[alt="About me (uncolored)"] {
+  /* inset(top right bottom left) */
+  clip-path: inset(100% 0 0 0);
+}
+
+

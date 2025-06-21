@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { Code, Gamepad2, Palette, Zap } from 'lucide-react';
-import HeroImage from '../assets/images/test.png'; // your image import
+import HeroImage from '../assets/images/uncolored.png';
+import HeroHighlight from '../assets/images/colored.png';
 
 type Highlight = {
   icon: React.ReactNode;
@@ -12,22 +13,26 @@ const highlights: Highlight[] = [
   {
     icon: <Gamepad2 className="w-6 h-6" />,
     title: 'Game Development',
-    description: 'Building Unity games and prototypes in C#, including VR experiments and jam entries that focus on engaging mechanics.',
+    description:
+      'Building Unity games and prototypes in C#, including VR experiments and jam entries that focus on engaging mechanics.',
   },
   {
     icon: <Code className="w-6 h-6" />,
     title: 'App Development',
-    description: 'Creating Fullstack React Native apps, delivering seamless mobile experiences like Dish Dash and BusBeat.',
+    description:
+      'Creating Fullstack React Native apps, delivering seamless mobile experiences like Dish Dash and BusBeat.',
   },
   {
     icon: <Palette className="w-6 h-6" />,
     title: '3D & Creative Design',
-    description: 'Modeling assets in Blender and crafting UI/UX elements, plus video editing for devlogs using Premiere Pro and Audacity.',
+    description:
+      'Modeling assets in Blender and crafting UI/UX elements, plus video editing for devlogs using Premiere Pro and Audacity.',
   },
   {
     icon: <Zap className="w-6 h-6" />,
     title: 'Rapid Prototyping',
-    description: 'Experimenting with game jams, quick challenges, and new tools—iterating fast to learn and innovate continuously.',
+    description:
+      'Experimenting with game jams, quick challenges, and new tools—iterating fast to learn and innovate continuously.',
   },
 ];
 
@@ -201,30 +206,49 @@ const About: React.FC = () => {
           <div className="text-center md:text-left">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">About Me</h2>
             <p className="text-xl text-gray-300 max-w-3xl leading-relaxed mx-auto md:mx-0">
-                I’m Riyaz M, a Unity and full-stack developer with 4+ years of experience delivering end-to-end projects. I’ve built and deployed apps using C#, React Native, Firebase, and AWS services, and crafted 3D assets in Blender with audio pipelines in FL Studio. I excel in rapid prototyping, Agile collaboration, performance optimization, and solving complex technical challenges to create engaging user experiences.
+              I’m Riyaz M, a Unity and full-stack developer with 4+ years of experience delivering
+              end-to-end projects. I’ve built and deployed apps using C#, React Native, Firebase, and
+              AWS services, and crafted 3D assets in Blender with audio pipelines in FL Studio. I
+              excel in rapid prototyping, Agile collaboration, performance optimization, and solving
+              complex technical challenges to create engaging user experiences.
             </p>
           </div>
 
           {/* Image side */}
           <div className="flex justify-center md:justify-end pt-10">
-            {/* Container with overflow-visible so image can peek */}
             <div className="relative group overflow-visible mt-16 md:mt-10">
-              {/* White box behind: rounded edges + shadow */}
+              {/* CARD CONTAINER: gradient wipe */}
               <div
                 className="
-                  bg-white 
                   w-72 h-96 
                   md:w-80 md:h-[28rem] 
                   rounded-2xl 
                   shadow-lg 
-                  transition-transform duration-300 
+                  transform transition-transform duration-300 
+                  origin-bottom
                   group-hover:scale-105 
                   group-hover:shadow-2xl
+                  group-hover:-rotate-3
+                  relative overflow-hidden
                 "
               >
-              
+                {/* WHITE BASE */}
+                <div className="absolute inset-0 bg-white" />
+
+                {/* GRADIENT SLIDE */}
+                <div
+                  className="
+                    absolute inset-0
+                    bg-gradient-to-r from-blue-500 to-purple-500
+                    translate-y-full
+                    transition-transform duration-500 ease-out
+                    group-hover:translate-y-0
+                  "
+                />
               </div>
-              {/* <img
+
+              {/* Hero image */}
+              <img
                 src={HeroImage}
                 alt="About me"
                 className="
@@ -233,21 +257,22 @@ const About: React.FC = () => {
                   left-1/2 
                   w-72 md:w-80
                   transform -translate-x-1/2
-                  hover:cursor-pointer 
                   transition-transform duration-300 
                   group-hover:scale-105
+                  origin-bottom
+                  group-hover:-rotate-3
                 "
                 style={{
                   objectFit: 'contain',
                   maxHeight: '120%',
-                  top: '-20%'
+                  top: '-20%',
                 }}
-              /> */}
+              />
             </div>
           </div>
         </div>
 
-        {/* Highlights cards - increased top margin */}
+        {/* Highlights cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16 mt-8">
           {highlights.map((h, idx) => (
             <TiltCard key={idx} highlight={h} />
@@ -261,8 +286,9 @@ const About: React.FC = () => {
                 Let's Build Something Amazing Together
               </h3>
               <p className="text-gray-300 text-lg leading-relaxed mb-6">
-                Whether you're looking for a game that captivates players, an app that solves real problems,
-                or a creative solution that stands out from the crowd, I'm here to bring your vision to life.
+                Whether you're looking for a game that captivates players, an app that solves real
+                problems, or a creative solution that stands out from the crowd, I'm here to bring
+                your vision to life.
               </p>
             </div>
             <div className="text-center lg:text-right">
