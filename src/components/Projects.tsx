@@ -12,6 +12,7 @@ import {
 import talim from '../assets/images/talim.png';
 import busbeat from '../assets/images/busbeat.svg';
 import lightmaker from '../assets/images/lightmaker.png';
+import skillshot from '../assets/images/skillshot.png';
 
 interface Project {
   id: number;
@@ -80,16 +81,15 @@ const projects: Project[] = [
   },
   {
     id: 4,
-    title: 'Space Shooter Arcade',
-    description: 'Fast-paced arcade shooter with procedural levels and power-ups.',
+    title: 'Skill-Shot VR',
+    description: 'Enter the world of Skill Shot VR—a fast-paced prototype where precision, timing, and creative weapons define your virtual shooting skills.',
     longDescription:
-      'An intense arcade-style space shooter featuring procedurally generated levels, upgrade systems, boss battles, and leaderboards. Optimized for both desktop and mobile platforms.',
+      'Skill Shot VR is a personal prototype project built to explore VR game development. Set in an immersive environment, the game challenges players to complete skill-based shooting trials using guns, swords, and throwable bombs. Designed as a learning experiment, the focus is on accuracy, interaction, and real-time feedback in a VR setting.',
     category: 'game',
-    image:
-      'https://images.pexels.com/photos/586055/pexels-photo-586055.jpeg?auto=compress&cs=tinysrgb&w=600',
-    technologies: ['Unity', 'C#', 'WebGL', 'Firebase'],
-    githubUrl: '#',
-    liveUrl: '#',
+    image:skillshot,
+    technologies: ['Unity', 'C#', 'Meta Quest 3'],
+    viewMoreUrl: 'https://side.quest/app/37706/skillshot-vr',
+    viewOnItch: 'https://fantom-atom.itch.io/skill-shot-vr',
     featured: false,
   },
   {
