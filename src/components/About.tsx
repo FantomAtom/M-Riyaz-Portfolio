@@ -212,7 +212,7 @@ const About: React.FC = () => {
           <div className="text-center md:text-left">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">About Me</h2>
             <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl leading-relaxed mx-auto md:mx-0">
-              I’m Riyaz M, a Unity and full-stack developer with 4+ years of experience delivering
+              I’m Riyaz, a Unity and full-stack developer with 4+ years of experience delivering
               end-to-end projects. I’ve built and deployed apps using C#, React Native, Firebase, and
               AWS services, and crafted 3D assets in Blender with audio pipelines in FL Studio. I
               excel in rapid prototyping, Agile collaboration, performance optimization, and solving
