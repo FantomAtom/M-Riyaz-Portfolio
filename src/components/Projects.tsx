@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 
 import talim from '../assets/images/talim.png';
+import busbeat from '../assets/images/busbeat.svg';
 
 interface Project {
   id: number;
@@ -34,7 +35,7 @@ const projects: Project[] = [
     description: 'Discover Islamic knowledge at your own pace with Talim – an interactive app featuring lessons on Islam. Learn anytime, anywhere, and deepen your connection to Islam.',
     longDescription:
       'Talim is an interactive app designed to simplify Islamic learning. With lessons on the Quran, Prophets’ biographies, and Hadith, the app offers a user-friendly experience for learners of all levels. Features include personalized progress tracking, quizzes, badges, and leaderboards to keep you motivated. Accessible on all devices, Talim makes learning about Islam easy, engaging, and flexible.',
-    category: 'app',
+    category: 'game',
     image: talim, // use imported image
     technologies: ['Unity', 'C#', 'AWS DynamoDB', 'AWS Lambda'], // adjust as appropriate
     viewMoreUrl: 'https://akhlaqventures.com/products/talim',
@@ -43,16 +44,23 @@ const projects: Project[] = [
   },
   {
     id: 2,
-    title: 'TaskFlow Mobile App',
-    description: 'A productivity app with smart scheduling and team collaboration features.',
+    title: 'BusBeat - Your Friendly Bus Mate',
+    description:
+      'Track your bus in real-time with BusBeat! Enhance your commute with live updates, safety features, and seamless driver management.',
     longDescription:
-      'A comprehensive productivity application that helps teams manage tasks, deadlines, and collaborative projects. Features real-time synchronization, smart notifications, and intuitive design.',
+      "BusBeat is a smart solution for bus travel, offering live tracking, safety alerts, feedback options, and driver management—all without requiring GPS installation. It's an affordable, efficient way to improve the commuting experience, providing real-time updates and enhanced security for passengers.",
     category: 'app',
-    image:
-      'https://images.pexels.com/photos/147413/twitter-facebook-together-exchange-of-information-147413.jpeg?auto=compress&cs=tinysrgb&w=600',
-    technologies: ['React Native', 'Node.js', 'MongoDB', 'Socket.io'],
-    githubUrl: '#',
-    liveUrl: '#',
+    image: busbeat,
+    technologies: [
+      // adjust or list actual tech stack if known; placeholders below:
+      'React Native',
+      'Tailwind CSS',
+      'AWS DynamoDB',
+      'AWS Lambda',
+    ],
+    viewMoreUrl: 'https://busbeat.com',
+    playstoreUrl:
+      'https://play.google.com/store/apps/details?id=com.akhlaqventures.busbeat',
     featured: true,
   },
   {
@@ -456,7 +464,7 @@ const Projects: React.FC = () => {
                             ))}
                           </div>
                           {project.featured && (
-                            <span className="absolute top-3 right-3 px-2 py-1 bg-yellow-400 text-black text-xs font-semibold rounded-full">
+                            <span className="absolute bottom-44 right-3 px-2 py-1 bg-yellow-400 text-black text-xs font-semibold rounded-full">
                               Featured
                             </span>
                           )}
