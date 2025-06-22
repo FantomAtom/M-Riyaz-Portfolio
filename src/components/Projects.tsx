@@ -603,7 +603,7 @@ const Projects: React.FC = () => {
                             ))}
                           </div>
                           {project.featured && (
-                            <span className="absolute bottom-44 right-3 px-2 py-1 bg-yellow-400 text-black text-xs font-semibold rounded-full">
+                            <span className="absolute bottom-36 md:bottom-44 right-3 px-2 py-1 bg-yellow-400 text-black text-xs font-semibold rounded-full">
                               Featured
                             </span>
                           )}
