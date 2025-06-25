@@ -431,29 +431,63 @@ const ProjectCard: React.FC<{ project: Project; onClick: () => void }> = ({ proj
               ))}
             </div>
             <div className="flex items-center space-x-3">
-              {project.githubUrl && (
-                <a
-                  href={project.githubUrl}
-                  className="text-gray-400 hover:text-white transition-colors"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <Github className="w-5 h-5" />
-                </a>
-              )}
-              {project.liveUrl && (
-                <a
-                  href={project.liveUrl}
-                  className="text-gray-400 hover:text-white transition-colors"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <ExternalLink className="w-5 h-5" />
-                </a>
-              )}
-            </div>
+  {project.viewMoreUrl && (
+    <a
+      href={project.viewMoreUrl}
+      className="text-gray-400 hover:text-white transition-colors"
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <ExternalLink className="w-5 h-5" />
+    </a>
+  )}
+  {project.playstoreUrl && (
+    <a
+      href={project.playstoreUrl}
+      className="text-gray-400 hover:text-white transition-colors"
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <Smartphone className="w-5 h-5" />
+    </a>
+  )}
+  {project.viewOnItch && (
+    <a
+      href={project.viewOnItch}
+      className="text-gray-400 hover:text-white transition-colors"
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <Store className="w-5 h-5" />
+    </a>
+  )}
+  {project.viewOnYT && (
+    <a
+      href={project.viewOnYT}
+      className="text-gray-400 hover:text-white transition-colors"
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <Youtube className="w-5 h-5" />
+    </a>
+  )}
+  {project.githubUrl && (
+    <a
+      href={project.githubUrl}
+      className="text-gray-400 hover:text-white transition-colors"
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <Github className="w-5 h-5" />
+    </a>
+  )}
+</div>
+
           </div>
         </div>
       </div>
