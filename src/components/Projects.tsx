@@ -14,6 +14,7 @@ import talim from '../assets/images/talim.png';
 import busbeat from '../assets/images/busbeat.svg';
 import lightmaker from '../assets/images/lightmaker.png';
 import skillshot from '../assets/images/skillshot.png';
+import dishdash from '../assets/images/dishdash.jpg';
 
 interface Project {
   id: number;
@@ -96,13 +97,12 @@ const projects: Project[] = [
   },
   {
     id: 5,
-    title: 'Dish Dash! - Food Delivery App',
+    title: 'Dish Dash! - Food Ordering App',
     description: 'Dish Dash! is a React Native food-ordering prototype with delivery and pickup options, powered by Firebase for real-time data and secure user authentication.',
     longDescription:
       'Dish Dash! is a learning project built in React Native that lets users browse menus, place orders for delivery or pickup, and manage their account via Firebase Authentication. It uses Firestore for storing menu items and orders, Firebase Storage for images, and demonstrates real-time updates and basic order flow. Designed as a prototype, it showcases integration of core Firebase services and mobile UI patterns for a seamless ordering experience.',
     category: 'app',
-    image:
-      'https://media.istockphoto.com/id/1394533352/vector/male-food-delivery-man-in-yellow-uniform-sits-on-scooter-or-motorcycle-with-a-box.jpg?s=612x612&w=0&k=20&c=XkfEONMbcZVa_y9uJ6wR1oPmk2BqdkFinuY5yr8tkTA=',
+    image: dishdash,
     technologies: ['React Native', 'JavaScript', 'Firebase Authentication', 'Firebase Storage'],
     githubUrl: 'https://github.com/FantomAtom/Dish-Dash',
     featured: false,
