@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Code2, Github, Linkedin, Store } from 'lucide-react';
+import { Code2, Github, Linkedin, Store, Briefcase } from 'lucide-react';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -68,6 +68,7 @@ const Footer: React.FC = () => {
                 { href: 'https://github.com/FantomAtom', Icon: Github, label: 'GitHub' },
                 { href: 'https://www.linkedin.com/in/m-riyaz-dev/', Icon: Linkedin, label: 'LinkedIn' },
                 { href: 'https://fantom-atom.itch.io/', Icon: Store, label: 'Itch.io' },
+                { href: 'https://www.freelancer.com/u/contactriyaz2727', Icon: Briefcase, label: 'Freelancer' },
               ].map(({ href, Icon, label }) => (
                 <a
                   key={label}

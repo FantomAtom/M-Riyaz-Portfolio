@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Send, MapPin, Phone, Github, Linkedin, Store } from 'lucide-react';
+import { Mail, Send, MapPin, Phone, Github, Linkedin, Store, Briefcase } from 'lucide-react';
 
 const WEB3FORMS_ACCESS_KEY = "0a037c19-b1a3-48ae-ad95-01639cf23f52";
 const MIN_SUBMIT_DELAY = 3000;
@@ -352,6 +352,7 @@ const Contact: React.FC = () => {
                   { icon: <Github />, url: 'https://github.com/FantomAtom' },
                   { icon: <Linkedin />, url: 'https://www.linkedin.com/in/m-riyaz-dev/' },
                   { icon: <Store />, url: 'https://fantom-atom.itch.io/' },
+                  { icon: <Briefcase />, url: 'https://www.freelancer.com/u/contactriyaz2727' },
                 ].map((soc, i) => (
                   <a
                     key={i}

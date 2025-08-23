@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Github, Linkedin, Store } from 'lucide-react';
+import { Github, Linkedin, Store, Briefcase } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const roles = [
@@ -159,6 +159,14 @@ export default function Hero() {
             className="text-gray-400 hover:text-white"
           >
             <Store className="w-6 h-6" />
+          </a>
+          <a 
+            href="https://www.freelancer.com/u/contactriyaz2727" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="text-gray-400 hover:text-white"
+          >
+            <Briefcase className="w-6 h-6" />
           </a>
         </div>
       </div>

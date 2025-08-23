@@ -45,7 +45,7 @@ const projects: Project[] = [
     category: 'game',
     image: talim, // use imported image
     technologies: ['Unity', 'C#', 'AWS DynamoDB', 'AWS Lambda'], // adjust as appropriate
-    viewMoreUrl: 'https://akhlaqventures.com/products/talim',
+    viewMoreUrl: 'https://akhlaqventures.com/projects/talim',
     playstoreUrl: 'https://play.google.com/store/apps/details?id=com.AkhlaqVentures.talim',
     featured: true,
   },
